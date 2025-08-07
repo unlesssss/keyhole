@@ -29,7 +29,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 500px;
+      max-width: 600px;
       width: 100%;
       padding: 0 20px;
     }
@@ -37,26 +37,28 @@
     .form-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px; /* spacing between blocks */
     }
 
     .form-lines {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
       gap: 4px;
-      margin-right: 4px;
     }
 
     .form-lines div {
-      width: 8px;
-      height: 30px;
+      width: 10px;
+      height: 38px; /* matches input height */
       background-color: white;
-      border: 2px solid black;
+      border: 1px solid black; /* same as input */
     }
 
     form {
       display: flex;
       flex: 1;
+      gap: 8px; /* gap between input and button */
     }
 
     input[type="email"] {
@@ -66,17 +68,22 @@
       border: 1px solid black;
       font-family: 'Copperplate', serif;
       outline: none;
+      height: 38px;
     }
 
     button[type="submit"] {
       background: black;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 0 20px;
+      height: 38px;
       cursor: pointer;
       font-family: 'Copperplate', serif;
       font-size: 12px;
       letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     button[type="submit"]:hover {
@@ -164,7 +171,7 @@
     </div>
   </div>
 
-  <!-- Script to handle thank you -->
+  <!-- Thank you logic -->
   <script>
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
@@ -173,7 +180,7 @@
       setTimeout(() => {
         form.style.display = 'none';
         thankYou.style.display = 'block';
-      }, 1000); // Delay to simulate response time
+      }, 1000);
     });
   </script>
 
