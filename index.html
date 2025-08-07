@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Keyhole</title>
-  <link rel="stylesheet" href="https://assets.mlcdn.com/fonts.css?version=1754564">
   <style>
     @font-face {
       font-family: 'Copperplate';
@@ -24,66 +23,56 @@
       width: 100vw;
     }
 
-    .form-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 600px;
-      width: 100%;
-      padding: 0 20px;
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .form-container {
+    .form-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px; /* spacing between blocks */
+      gap: 8px; /* spacing between decor and form */
     }
 
-    .form-lines {
+    .form-decor {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      gap: 4px;
+      gap: 8px;
     }
 
-    .form-lines div {
-      width: 10px;
-      height: 38px; /* matches input height */
+    .box {
+      width: 12px;
+      height: 40px; /* same as input height */
+      border: 1px solid black;
       background-color: white;
-      border: 1px solid black; /* same as input */
     }
 
     form {
       display: flex;
-      flex: 1;
-      gap: 8px; /* gap between input and button */
+      gap: 8px; /* spacing between input and button */
     }
 
     input[type="email"] {
-      flex: 1;
-      padding: 10px;
+      height: 40px;
+      padding: 0 10px;
       font-size: 12px;
       border: 1px solid black;
       font-family: 'Copperplate', serif;
       outline: none;
-      height: 38px;
+      flex: 1;
     }
 
     button[type="submit"] {
+      height: 40px;
+      padding: 0 20px;
       background: black;
       color: white;
-      border: none;
-      padding: 0 20px;
-      height: 38px;
-      cursor: pointer;
       font-family: 'Copperplate', serif;
       font-size: 12px;
+      border: none;
+      cursor: pointer;
       letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     button[type="submit"]:hover {
@@ -92,11 +81,11 @@
 
     #thank-you-message {
       display: none;
-      margin-top: 20px;
       font-size: 12px;
-      text-align: center;
+      margin-left: 10px;
     }
 
+    /* Footer (optional, already working) */
     .footer {
       position: absolute;
       bottom: 20px;
@@ -137,26 +126,23 @@
 </head>
 <body>
 
-  <!-- Form Wrapper -->
+  <!-- Form block with decoration -->
   <div class="form-wrapper">
-    <div class="form-container">
-      <div class="form-lines">
-        <div></div>
-        <div></div>
-      </div>
-
-      <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
-        <input type="email" name="fields[email]" placeholder="enter mail" required>
-        <button type="submit">SUBSCRIBE</button>
-      </form>
+    <div class="form-decor">
+      <div class="box"></div>
+      <div class="box"></div>
     </div>
 
-    <div id="thank-you-message">THANK YOU.</div>
+    <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
+      <input type="email" name="fields[email]" placeholder="ENTER MAIL" required>
+      <button type="submit">SUBSCRIBE</button>
+    </form>
 
+    <div id="thank-you-message">THANK YOU.</div>
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer (optional) -->
   <div class="footer">
     <div class="footer-left">
       © 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED
@@ -171,7 +157,7 @@
     </div>
   </div>
 
-  <!-- Thank you logic -->
+  <!-- Success Handling -->
   <script>
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
@@ -180,9 +166,10 @@
       setTimeout(() => {
         form.style.display = 'none';
         thankYou.style.display = 'block';
-      }, 1000);
+      }, 1000); // simple delay for better UX
     });
   </script>
 
 </body>
 </html>
+
