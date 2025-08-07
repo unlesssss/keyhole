@@ -98,7 +98,7 @@
     }
 
     .keyhole-logo {
-      height: 30px;
+      height: 18px;
     }
   </style>
 </head>
@@ -106,10 +106,17 @@
 
   <!-- Form Wrapper -->
   <div class="form-wrapper">
-    <form action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="_blank">
+    <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
       <input type="email" name="fields[email]" placeholder="enter mail" required>
       <button type="submit">SUBSCRIBE</button>
     </form>
+  
+    <div id="thank-you-message" style="display:none; margin-top: 20px; font-size: 12px; text-align: center;">
+      THANK YOU.
+    </div>
+  
+    <!-- Hidden iframe to prevent redirect -->
+    <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
   <!-- Footer -->
@@ -126,6 +133,16 @@
       <a href="/imprint">IMPRINT</a>
     </div>
   </div>
-
+  <script>
+    const form = document.getElementById('newsletter-form');
+    const thankYou = document.getElementById('thank-you-message');
+  
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        form.style.display = 'none';
+        thankYou.style.display = 'block';
+      }, 1500); // Warte 1.5 Sekunden für gutes UX-Feedback
+    });
+  </script>
 </body>
 </html>
