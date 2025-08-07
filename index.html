@@ -29,15 +29,37 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 400px;
+      max-width: 500px;
       width: 100%;
       padding: 0 20px;
     }
 
-    form {
+    .form-container {
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .form-lines {
+      width: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 5px;
+    }
+
+    .form-lines::before,
+    .form-lines::after {
+      content: '';
+      display: block;
+      height: 30px;
+      border-left: 2px solid black;
+      margin-bottom: 4px;
+    }
+
+    form {
+      display: flex;
+      flex: 1;
     }
 
     input[type="email"] {
@@ -62,6 +84,13 @@
 
     button[type="submit"]:hover {
       background-color: #222;
+    }
+
+    #thank-you-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 12px;
+      text-align: center;
     }
 
     .footer {
@@ -106,87 +135,18 @@
 
   <!-- Form Wrapper -->
   <div class="form-wrapper">
-    <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
-      <input type="email" name="fields[email]" placeholder="enter mail" required>
-      <button type="submit">SUBSCRIBE</button>
-    </form>
-  
-    <div id="thank-you-message" style="display:none; margin-top: 20px; font-size: 12px; text-align: center;">
-      THANK YOU.
+    <div class="form-container">
+      <div class="form-lines"></div>
+
+      <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
+        <input type="email" name="fields[email]" placeholder="enter mail" required>
+        <button type="submit">SUBSCRIBE</button>
+      </form>
     </div>
-  
-    <!-- Hidden iframe to prevent redirect -->
+
+    <div id="thank-you-message">THANK YOU.</div>
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
-  .form-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 500px;
-    width: 100%;
-    padding: 0 20px;
-  }
-  
-  .form-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  form {
-    display: flex;
-    flex: 1;
-  }
-  
-  input[type="email"] {
-    flex: 1;
-    padding: 10px;
-    font-size: 12px;
-    border: 1px solid black;
-    font-family: 'Copperplate', serif;
-    outline: none;
-  }
-  
-  button[type="submit"] {
-    background: black;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-family: 'Copperplate', serif;
-    font-size: 12px;
-    letter-spacing: 1px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #222;
-  }
-  
-  #thank-you-message {
-    display: none;
-    margin-top: 20px;
-    font-size: 12px;
-    text-align: center;
-  }
-  
-  .form-lines {
-    width: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    margin-right: 5px;
-  }
-  
-  .form-lines::before,
-  .form-lines::after {
-    content: '';
-    display: block;
-    height: 30px;
-    border-left: 2px solid black;
-    margin-bottom: 4px;
-  }
 
   <!-- Footer -->
   <div class="footer">
@@ -202,16 +162,19 @@
       <a href="/imprint">IMPRINT</a>
     </div>
   </div>
+
+  <!-- Newsletter Success Handling -->
   <script>
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
-  
+
     form.addEventListener('submit', () => {
       setTimeout(() => {
         form.style.display = 'none';
         thankYou.style.display = 'block';
-      }, 1000); // Warte 1.5 Sekunden für gutes UX-Feedback
+      }, 1000);
     });
   </script>
+
 </body>
 </html>
