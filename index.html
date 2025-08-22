@@ -24,6 +24,7 @@
       --gap-btn: 12px;      /* Abstand Input → Button */
       --btn-font: 16px;     /* Button-Schriftgröße */
       --btn-minw: 150px;    /* Mindestbreite Button */
+      --smoke-w: 110px;     /* >>> SMOKE Größe (kleiner gemacht) */
     }
 
     *{ box-sizing: border-box; }
@@ -45,16 +46,21 @@
       gap:0;
     }
 
-    /* Linke Rechtecke: transparent, Kontur, mit weißer rechter Kante */
+    /* Linke Rechtecke: transparenter Kasten mit schwarzer Kontur + weißer Innenkante rechts */
     .decor-box{
       position:relative; width:var(--box-w); height:100%;
       background:transparent; border:1px solid #000;
       margin-right:var(--box-gap);
     }
-    .decor-box:last-of-type{ margin-right:var(--box-after-gap); } /* Luft vor dem Input */
+    .decor-box:last-of-type{ margin-right:var(--box-after-gap); }
+    /* weiße Innenlinie rechts – liegt INNERHALB, der schwarze Rand bleibt sichtbar */
     .decor-box::after{
-      content:""; position:absolute; top:-1px; bottom:-1px; right:-1px;
-      border-right:2px solid #fff;   /* weiße „Innenkante“ rechts */
+      content:"";
+      position:absolute; top:0; bottom:0;
+      right:1px;               /* 1px innerhalb der schwarzen Außenkante */
+      width:2px;               /* Breite der weißen Innenkante */
+      background:#fff;
+      pointer-events:none;
     }
 
     /* Input (Helvetica), exakt 30px hoch */
@@ -78,10 +84,10 @@
     }
     button[type="submit"]:hover{ background:#222; }
 
-    /* SMOKE-Overlay über den linken Rechtecken (Position nach Bedarf justieren) */
+    /* SMOKE-Overlay – kleiner gemacht */
     .smoke{
       position:absolute; left:-14px; bottom:34px;
-      max-width:160px; height:auto; pointer-events:none;
+      max-width:var(--smoke-w); height:auto; pointer-events:none;
     }
 
     #thank-you-message{ display:none; font-size:12px; text-align:center; }
