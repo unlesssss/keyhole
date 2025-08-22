@@ -16,7 +16,7 @@
     }
 
     :root{
-      --bar-h: 30px;        /* Höhe der gesamten Bar */
+      --bar-h: 30px;        /* Höhe der Bar */
       --bar-w: 620px;       /* Gesamtbreite (Input + Button + Spacings) */
       --box-w: 6px;         /* Breite der linken Rechtecke */
       --box-gap: 2px;       /* Abstand zwischen den 2 linken Rechtecken */
@@ -24,7 +24,8 @@
       --gap-btn: 12px;      /* Abstand Input → Button */
       --btn-font: 16px;     /* Button-Schriftgröße */
       --btn-minw: 150px;    /* Mindestbreite Button */
-      --smoke-w: 70px;     /* >>> SMOKE Größe (kleiner gemacht) */
+      --smoke-w: 110px;     /* SMOKE Größe */
+      --y-offset: 220px;    /* >>> vertikaler Offset nach unten */
     }
 
     *{ box-sizing: border-box; }
@@ -34,9 +35,18 @@
       font-family:'Copperplate', serif; height:100vh; width:100vw;
     }
 
-    body{ display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    /* statt vertikal zu zentrieren, starten wir oben
+       und schieben das Formular mit margin-top nach unten */
+    body{
+      display:flex; flex-direction:column;
+      justify-content:flex-start; align-items:center;
+    }
 
-    .form-wrapper{ display:flex; flex-direction:column; align-items:center; gap:20px; }
+    .form-wrapper{
+      display:flex; flex-direction:column; align-items:center; gap:20px;
+      margin-top: var(--y-offset);        /* <<< alles weiter runter */
+    }
+
     form{ display:flex; flex-direction:column; align-items:center; gap:10px; }
 
     /* === Schlanke Bar mit Doppel-Rahmen links === */
@@ -46,21 +56,16 @@
       gap:0;
     }
 
-    /* Linke Rechtecke: transparenter Kasten mit schwarzer Kontur + weißer Innenkante rechts */
+    /* Linke Rechtecke: Kontur + weiße Innenkante rechts */
     .decor-box{
       position:relative; width:var(--box-w); height:100%;
       background:transparent; border:1px solid #000;
       margin-right:var(--box-gap);
     }
     .decor-box:last-of-type{ margin-right:var(--box-after-gap); }
-    /* weiße Innenlinie rechts – liegt INNERHALB, der schwarze Rand bleibt sichtbar */
     .decor-box::after{
-      content:"";
-      position:absolute; top:0; bottom:0;
-      right:1px;               /* 1px innerhalb der schwarzen Außenkante */
-      width:2px;               /* Breite der weißen Innenkante */
-      background:#fff;
-      pointer-events:none;
+      content:""; position:absolute; top:0; bottom:0; right:1px;
+      width:2px; background:#fff; pointer-events:none;
     }
 
     /* Input (Helvetica), exakt 30px hoch */
@@ -74,7 +79,7 @@
     /* definierter Spalt vor dem Button */
     .gap-into-button{ width:var(--gap-btn); }
 
-    /* Button: 30px hoch, Text 100% mittig */
+    /* Button: 30px hoch, Text mittig */
     button[type="submit"]{
       display:flex; align-items:center; justify-content:center;
       height:100%; padding:0 28px; min-width:var(--btn-minw);
@@ -84,9 +89,9 @@
     }
     button[type="submit"]:hover{ background:#222; }
 
-    /* SMOKE-Overlay – kleiner gemacht */
+    /* SMOKE-Overlay – bewegt sich mit, da innerhalb .input-group */
     .smoke{
-      position:absolute; left:-45px; bottom:34px;
+      position:absolute; left:-14px; bottom:34px;
       max-width:var(--smoke-w); height:auto; pointer-events:none;
     }
 
@@ -102,6 +107,11 @@
     .footer a{ color:#000; text-decoration:none; font-size:10px; }
     .footer a:hover{ text-decoration:underline; }
     .keyhole-logo{ height:18px; }
+
+    /* optional: auf kleineren Screens weniger Offset */
+    @media (max-width: 600px){
+      :root{ --y-offset: 140px; }
+    }
   </style>
 </head>
 <body>
@@ -112,20 +122,14 @@
           target="ml-form-frame">
 
       <div class="input-group">
-        <!-- SMOKE-Overlay -->
         <img class="smoke" src="SMOKE.png" alt="smoke">
-
-        <!-- Zwei linke Rahmen-Rechtecke -->
         <div class="decor-box"></div>
         <div class="decor-box"></div>
-
-        <!-- Bar + definierter Abstand + Button -->
         <input type="email" name="fields[email]" placeholder="enter mail" required>
         <div class="gap-into-button" aria-hidden="true"></div>
         <button type="submit">SUBSCRIBE</button>
       </div>
 
-      <!-- Checkbox -->
       <div style="margin-top:10px; font-size:10px;">
         <label>
           <input type="checkbox" name="consent" required>
@@ -135,18 +139,12 @@
     </form>
 
     <div id="thank-you-message">THANK YOU.</div>
-
-    <!-- Hidden iframe to prevent redirect -->
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
   <div class="footer">
-    <div class="footer-left">
-      © 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED
-    </div>
-    <div class="footer-center">
-      <img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo">
-    </div>
+    <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
+    <div class="footer-center"><img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></div>
     <div class="footer-right">
       <a href="https://instagram.com/keyhole.cc" target="_blank">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
@@ -157,12 +155,8 @@
   <script>
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
-
     form.addEventListener('submit', () => {
-      setTimeout(() => {
-        form.style.display = 'none';
-        thankYou.style.display = 'block';
-      }, 1000);
+      setTimeout(() => { form.style.display = 'none'; thankYou.style.display = 'block'; }, 1000);
     });
   </script>
 </body>
