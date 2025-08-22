@@ -36,54 +36,68 @@
       display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
 
-    form {
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    form { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+    /* === Schlanker Balken: Input + Button === */
+    .input-group{
+      display: flex;
+      align-items: stretch;         /* gleiche Höhe */
+      width: 520px;                 /* Gesamtbreite */
+      max-width: 92vw;              /* responsive */
     }
 
-    /* === Input: Helvetica === */
-    input[type="email"] {
-      padding: 10px; font-size: 12px;
-      border: 1px solid black; outline: none;
-      width: 250px;
+    /* Input: Helvetica */
+    input[type="email"]{
+      flex: 1;
+      padding: 8px 12px;            /* flach */
+      font-size: 14px;
+      border: 1px solid black;
+      border-right: none;           /* keine Doppelkante */
+      outline: none;
       font-family: Helvetica, Arial, sans-serif;
+      background: white;
     }
-
-    /* Placeholder erbt die Schrift vom Input – optional explizit: */
-    input[type="email"]::placeholder {
+    input[type="email"]::placeholder{
       font-family: Helvetica, Arial, sans-serif;
+      color: #9a9a9a;
     }
 
-    /* === Button: Stencil Std Bold === */
-    button[type="submit"] {
-      background: black; color: white; border: none;
-      padding: 10px 20px; cursor: pointer;
+    /* Button: Stencil Std Bold */
+    button[type="submit"]{
+      padding: 8px 28px;            /* gleiche Höhe + länger */
+      min-width: 150px;             /* Balken-Look */
+      border: 1px solid black;
+      background: black; color: white;
       font-family: 'StencilStd-Bold', sans-serif;
-      font-size: 16px; letter-spacing: 1px;
+      font-size: 16px;              /* +4px */
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-align: center;
     }
-    button[type="submit"]:hover { background-color: #222; }
+    button[type="submit"]:hover{ background-color:#222; }
 
-    #thank-you-message { display: none; font-size: 12px; text-align: center; }
+    #thank-you-message{ display:none; font-size:12px; text-align:center; }
 
-    .footer {
-      position: absolute; bottom: 20px; left: 0; width: 100%;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      padding: 0 40px; font-size: 10px;
+    .footer{
+      position:absolute; bottom:20px; left:0; width:100%;
+      display:flex; justify-content:space-between; align-items:flex-end;
+      padding:0 40px; font-size:10px;
     }
-    .footer-center { position: absolute; left: 50%; transform: translateX(-50%); }
-    .footer-right { display: flex; gap: 20px; }
-    .footer a { color: black; text-decoration: none; font-size: 10px; }
-    .footer a:hover { text-decoration: underline; }
-    .keyhole-logo { height: 18px; }
+    .footer-center{ position:absolute; left:50%; transform:translateX(-50%); }
+    .footer-right{ display:flex; gap:20px; }
+    .footer a{ color:black; text-decoration:none; font-size:10px; }
+    .footer a:hover{ text-decoration:underline; }
+    .keyhole-logo{ height:18px; }
   </style>
 </head>
 <body>
   <div class="form-wrapper">
-    <form id="newsletter-form" 
-          action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" 
-          method="post" 
+    <form id="newsletter-form"
+          action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe"
+          method="post"
           target="ml-form-frame">
-      
-      <div style="display: flex; align-items: center; gap: 10px;">
+
+      <div class="input-group">
         <input type="email" name="fields[email]" placeholder="enter mail" required>
         <button type="submit">SUBSCRIBE</button>
       </div>
