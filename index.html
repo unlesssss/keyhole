@@ -50,7 +50,8 @@
     /* Input: Helvetica */
     input[type="email"] {
       flex: 1;
-      padding: 8px 12px;
+      height: 40px;
+      padding: 0px 12px;
       font-size: 14px;
       border: 1px solid black;    /* kompletter Rahmen */
       outline: none;
@@ -64,7 +65,8 @@
 
     /* Button: Stencil Std Bold */
     button[type="submit"] {
-      padding: 8px 28px;
+      height: 40px;
+      padding: 0px 28px;
       min-width: 150px;
       border: 1px solid black;    /* kompletter Rahmen */
       background: black;
@@ -74,6 +76,9 @@
       letter-spacing: 1px;
       cursor: pointer;
       text-align: center;
+      display: flex;
+      align-items: center
+      justify-content: center;
     }
     button[type="submit"]:hover { background-color:#222; }
 
