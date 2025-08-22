@@ -5,111 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Keyhole</title>
   <style>
+    /* Copperplate für den Rest */
     @font-face {
       font-family: 'Copperplate';
       src: local('Copperplate');
     }
-
-    * {
-      box-sizing: border-box;
+    /* Stencil Std Bold einbinden (TTF im Root) */
+    @font-face {
+      font-family: 'StencilStd-Bold';
+      src: url('StencilStd-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
     }
 
+    * { box-sizing: border-box; }
+
     html, body {
-      margin: 0;
-      padding: 0;
-      background-color: white;
+      margin: 0; padding: 0; background-color: white;
       font-family: 'Copperplate', serif;
-      height: 100vh;
-      width: 100vw;
+      height: 100vh; width: 100vw;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
     }
 
     .form-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
 
     form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
 
+    /* === Input: Helvetica === */
     input[type="email"] {
-      padding: 10px;
-      font-size: 12px;
-      border: 1px solid black;
-      font-family: 'Copperplate', serif;
-      outline: none;
+      padding: 10px; font-size: 12px;
+      border: 1px solid black; outline: none;
       width: 250px;
+      font-family: Helvetica, Arial, sans-serif;
     }
 
+    /* Placeholder erbt die Schrift vom Input – optional explizit: */
+    input[type="email"]::placeholder {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    /* === Button: Stencil Std Bold === */
     button[type="submit"] {
-      background: black;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-family: 'Copperplate', serif;
-      font-size: 12px;
-      letter-spacing: 1px;
+      background: black; color: white; border: none;
+      padding: 10px 20px; cursor: pointer;
+      font-family: 'StencilStd-Bold', sans-serif;
+      font-size: 12px; letter-spacing: 1px;
     }
+    button[type="submit"]:hover { background-color: #222; }
 
-    button[type="submit"]:hover {
-      background-color: #222;
-    }
-
-    #thank-you-message {
-      display: none;
-      font-size: 12px;
-      text-align: center;
-    }
+    #thank-you-message { display: none; font-size: 12px; text-align: center; }
 
     .footer {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 0 40px;
-      font-size: 10px;
+      position: absolute; bottom: 20px; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 0 40px; font-size: 10px;
     }
-
-    .footer-center {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .footer-right {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer a {
-      color: black;
-      text-decoration: none;
-      font-size: 10px;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    .keyhole-logo {
-      height: 18px;
-    }
+    .footer-center { position: absolute; left: 50%; transform: translateX(-50%); }
+    .footer-right { display: flex; gap: 20px; }
+    .footer a { color: black; text-decoration: none; font-size: 10px; }
+    .footer a:hover { text-decoration: underline; }
+    .keyhole-logo { height: 18px; }
   </style>
 </head>
 <body>
