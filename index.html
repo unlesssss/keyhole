@@ -38,44 +38,44 @@
 
     form { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
-    /* === Schlanker Balken: Input + Button === */
-    .input-group{
+    /* === Input + Button wie im Mock-up === */
+    .input-group {
       display: flex;
-      align-items: stretch;         /* gleiche Höhe */
-      width: 520px;                 /* Gesamtbreite */
-      max-width: 92vw;              /* responsive */
+      align-items: center;
+      width: 520px;               /* Gesamtbreite */
+      max-width: 92vw;            /* responsive */
+      gap: 8px;                   /* Abstand zwischen Input und Button */
     }
 
     /* Input: Helvetica */
-    input[type="email"]{
+    input[type="email"] {
       flex: 1;
-      padding: 8px 12px;            /* flach */
+      padding: 8px 12px;
       font-size: 14px;
-      border: 1px solid black;
-      border-right: none;           /* keine Doppelkante */
+      border: 1px solid black;    /* kompletter Rahmen */
       outline: none;
       font-family: Helvetica, Arial, sans-serif;
       background: white;
     }
-    input[type="email"]::placeholder{
+    input[type="email"]::placeholder {
       font-family: Helvetica, Arial, sans-serif;
       color: #9a9a9a;
     }
 
     /* Button: Stencil Std Bold */
-    button[type="submit"]{
-      margin-left: 8px;
-      padding: 8px 28px;            /* gleiche Höhe + länger */
-      min-width: 150px;             /* Balken-Look */
-      border: 1px solid black;
-      background: black; color: white;
+    button[type="submit"] {
+      padding: 8px 28px;
+      min-width: 150px;
+      border: 1px solid black;    /* kompletter Rahmen */
+      background: black;
+      color: white;
       font-family: 'StencilStd-Bold', sans-serif;
-      font-size: 16px;              /* +4px */
+      font-size: 16px;            /* größer */
       letter-spacing: 1px;
       cursor: pointer;
       text-align: center;
     }
-    button[type="submit"]:hover{ background-color:#222; }
+    button[type="submit"]:hover { background-color:#222; }
 
     #thank-you-message{ display:none; font-size:12px; text-align:center; }
 
