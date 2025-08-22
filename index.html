@@ -10,7 +10,7 @@
       font-family: 'Copperplate';
       src: local('Copperplate');
     }
-    /* Stencil Std Bold einbinden (TTF im Root) */
+    /* Stencil Std Bold (TTF ins Root legen oder Pfad anpassen) */
     @font-face {
       font-family: 'StencilStd-Bold';
       src: url('StencilStd-Bold.ttf') format('truetype');
@@ -32,58 +32,77 @@
       justify-content: center; align-items: center;
     }
 
-    .form-wrapper {
-      display: flex; flex-direction: column; align-items: center; gap: 20px;
-    }
-
+    .form-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
     form { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
-    /* === Input-Group mit 2 Boxen === */
+    /* === Schlanke Bar mit 2 Rahmen-Rechtecken links === */
     .input-group{
-      display: flex;
-      align-items: stretch;   /* gleiche Höhe */
-      width: 520px;           /* Gesamtbreite */
-      max-width: 92vw;
-      gap: 0;                 /* Abstände selbst steuern */
+      position: relative;             /* für SMOKE Overlay */
+      display: flex; align-items: stretch;
+      width: 520px; max-width: 92vw;
+      height: 30px;                   /* EINHEITLICHE HÖHE */
+      gap: 0;
     }
 
-    /* Deko-Boxen */
+    /* Deko-Boxen: nur Kontur, transparent, weiße rechte Kante */
     .decor-box{
-      width: 6px;             /* Breite der Box */
-      background: black;      /* Farbe der Box */
-      margin-right: 2px;      /* Abstand zwischen den Boxen */
+      position: relative;
+      width: 10px;                    /* Breite der Boxen */
+      height: 100%;
+      background: transparent;
+      border: 1px solid #000;         /* schwarze Kontur */
+      margin-right: 4px;              /* Abstand zwischen den Boxen */
+    }
+    /* weiße rechte Kante (wirkt wie „nicht gefüllt“) */
+    .decor-box::after{
+      content: "";
+      position: absolute;
+      top: -1px; bottom: -1px; right: -1px;
+      border-right: 2px solid #fff;   /* Weißer Rand rechts */
     }
 
-    /* Input: Helvetica */
+    /* Input: bündig, 30px hoch, Helvetica */
     input[type="email"]{
       flex: 1;
-      padding: 8px 12px;
+      height: 100%;
+      padding: 0 12px;                /* flach */
       font-size: 14px;
-      border: 1px solid black;
+      border: 1px solid #000;
       outline: none;
       font-family: Helvetica, Arial, sans-serif;
-      background: white;
+      background: #fff;
     }
     input[type="email"]::placeholder{
       font-family: Helvetica, Arial, sans-serif;
       color: #9a9a9a;
     }
 
-    /* Button: Stencil Std Bold */
+    /* Abstand zwischen Bar und Button kontrolliert */
+    .gap-into-button{ width: 12px; }  /* feiner, pixelgenauer Spacer */
+
+    /* Button: exakt 30px hoch, Text wirklich zentriert */
     button[type="submit"]{
-      margin-left: 8px;       /* Abstand zum Input */
-      padding: 8px 28px;
+      display: flex; align-items: center; justify-content: center;
+      height: 100%;
+      padding: 0 28px;                /* länger, flach */
       min-width: 150px;
-      border: 1px solid black;
-      background: black;
-      color: white;
+      border: 1px solid #000;
+      background: #000; color: #fff;
       font-family: 'StencilStd-Bold', sans-serif;
-      font-size: 16px;
-      letter-spacing: 1px;
-      cursor: pointer;
-      text-align: center;
+      font-size: 16px; letter-spacing: 1px;
+      cursor: pointer; text-align: center;
     }
     button[type="submit"]:hover{ background-color:#222; }
+
+    /* SMOKE Overlay – sitzt über den linken Rechtecken */
+    .smoke{
+      position: absolute;
+      left: -12px;                    /* X-Position justieren */
+      bottom: 36px;                   /* Y-Position justieren (über den Boxen) */
+      pointer-events: none;           /* klickt nicht ins Formular */
+      max-width: 140px;               /* Größe anpassen */
+      height: auto;
+    }
 
     #thank-you-message{ display:none; font-size:12px; text-align:center; }
 
@@ -107,9 +126,16 @@
           target="ml-form-frame">
 
       <div class="input-group">
+        <!-- SMOKE-Overlay -->
+        <img class="smoke" src="SMOKE.png" alt="smoke">
+
+        <!-- zwei linke Rahmen-Rechtecke -->
         <div class="decor-box"></div>
         <div class="decor-box"></div>
+
+        <!-- Bar + kontrollierter Abstand + Button -->
         <input type="email" name="fields[email]" placeholder="enter mail" required>
+        <div class="gap-into-button" aria-hidden="true"></div>
         <button type="submit">SUBSCRIBE</button>
       </div>
 
