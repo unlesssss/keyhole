@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Impressum – Keyhole</title>
+  <title>Imprint – Keyhole</title>
   <style>
+    /* Fonts (paths point one level up to the repo root) */
     @font-face{
       font-family:'NeueHaasDisplay-Bold';
       src:url('../NeueHaasDisplay-Bold.ttf') format('truetype');
@@ -15,8 +16,12 @@
       src:url('../StencilStd-Bold.ttf') format('truetype');
       font-weight:700; font-style:normal; font-display:swap;
     }
+    @font-face{
+      font-family:'Copperplate';
+      src:local('Copperplate');
+    }
 
-    :root{ --container-w:720px; }
+    :root{ --container-w: 720px; }
 
     *{ box-sizing:border-box; }
     html,body{
@@ -24,16 +29,32 @@
       font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif;
     }
 
-    .page{ max-width:var(--container-w); margin:120px auto 80px; padding:0 24px; line-height:1.5; }
+    .page{
+      max-width:var(--container-w);
+      margin:120px auto 80px;
+      padding:0 24px;
+      line-height:1.5;
+    }
 
-    h1,h2{ font-family:'StencilStd-Bold', sans-serif; letter-spacing:1px; margin:0 0 12px; }
+    h1,h2{
+      font-family:'StencilStd-Bold', sans-serif;
+      letter-spacing:1px;
+      margin:0 0 12px;
+    }
     h1{ font-size:28px; }
     h2{ font-size:18px; margin-top:28px; }
 
     p,li,a{ font-size:14px; }
-    a{ color:#000; text-decoration:none; } a:hover{ text-decoration:underline; }
+    a{ color:#000; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
 
-    .footer{ position:fixed; bottom:20px; left:0; width:100%; display:flex; justify-content:space-between; align-items:flex-end; padding:0 40px; font-size:10px; }
+    /* Footer in Copperplate */
+    .footer{
+      position:fixed; bottom:20px; left:0; width:100%;
+      display:flex; justify-content:space-between; align-items:flex-end;
+      padding:0 40px; font-size:10px;
+      font-family:'Copperplate', serif;
+    }
     .footer-center{ position:fixed; left:50%; bottom:20px; transform:translateX(-50%); }
     .footer-right{ display:flex; gap:20px; }
     .keyhole-logo{ height:18px; }
@@ -41,28 +62,39 @@
 </head>
 <body>
   <main class="page">
-    <h1>Impressum</h1>
+    <h1>Imprint</h1>
 
-    <h2>Angaben gemäß § 5 TMG</h2>
-    <p><strong>Keyhole Club Congress</strong><br>Vor- und Nachname<br>Straße Hausnummer<br>PLZ Ort, Deutschland</p>
+    <h2>Operator</h2>
+    <p>
+      This website is operated by a <strong>private individual (non-commercial)</strong>.<br/>
+      The content is created in a private capacity and not with the intention of making a profit.
+    </p>
 
-    <h2>Kontakt</h2>
-    <p>E-Mail: <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a><br>Telefon: <a href="tel:+49XXXXXXXXX">+49&nbsp;XX&nbsp;XXX&nbsp;XXXX</a></p>
+    <h2>Contact</h2>
+    <p>
+      Email: <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a><br/>
+      Postal address will be provided upon legitimate legal request.
+    </p>
 
-    <h2>Vertretungsberechtigt</h2><p>Vor- und Nachname</p>
-    <h2>Umsatzsteuer</h2><p>Kleinunternehmer gemäß § 19 UStG – es wird keine Umsatzsteuer ausgewiesen.</p>
-    <h2>Inhaltlich Verantwortlicher</h2><p>Vor- und Nachname (Anschrift wie oben)</p>
+    <h2>VAT / Trade</h2>
+    <p>No VAT ID. No commercial activity.</p>
 
-    <h2>Haftung für Inhalte</h2>
-    <p>Wir übernehmen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben unberührt.</p>
+    <h2>Liability for Content</h2>
+    <p>
+      The contents of these pages were created with great care. However, we cannot guarantee the accuracy,
+      completeness or timeliness of the content.
+    </p>
 
-    <h2>Haftung für Links</h2>
-    <p>Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese Inhalte ist der jeweilige Anbieter verantwortlich.</p>
+    <h2>Liability for Links</h2>
+    <p>
+      This site contains links to external websites of third parties. We have no influence on their content;
+      the respective provider is responsible. At the time of linking, no illegal content was recognizable.
+    </p>
 
-    <h2>Urheberrecht</h2>
-    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
-
-    <p style="margin-top:28px;"><a href="/">← Zur Startseite</a></p>
+    <h2>Copyright</h2>
+    <p>
+      All content on this website is subject to copyright. Any use beyond the limits of copyright law requires prior consent.
+    </p>
   </main>
 
   <div class="footer">
