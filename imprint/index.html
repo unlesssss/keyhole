@@ -1,64 +1,78 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Impressum – Keyhole</title>
   <style>
-    body{font-family:Helvetica,Arial,sans-serif;margin:40px;line-height:1.5}
-    a{color:#000}
-    h1{font-size:20px;margin-bottom:8px}
-    h2{font-size:16px;margin-top:24px;margin-bottom:6px}
-    .small{font-size:12px;color:#444}
+    @font-face{
+      font-family:'NeueHaasDisplay-Bold';
+      src:url('../NeueHaasDisplay-Bold.ttf') format('truetype');
+      font-weight:700; font-style:normal; font-display:swap;
+    }
+    @font-face{
+      font-family:'StencilStd-Bold';
+      src:url('../StencilStd-Bold.ttf') format('truetype');
+      font-weight:700; font-style:normal; font-display:swap;
+    }
+
+    :root{ --container-w:720px; }
+
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0; padding:0; background:#fff; color:#000;
+      font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif;
+    }
+
+    .page{ max-width:var(--container-w); margin:120px auto 80px; padding:0 24px; line-height:1.5; }
+
+    h1,h2{ font-family:'StencilStd-Bold', sans-serif; letter-spacing:1px; margin:0 0 12px; }
+    h1{ font-size:28px; }
+    h2{ font-size:18px; margin-top:28px; }
+
+    p,li,a{ font-size:14px; }
+    a{ color:#000; text-decoration:none; } a:hover{ text-decoration:underline; }
+
+    .footer{ position:fixed; bottom:20px; left:0; width:100%; display:flex; justify-content:space-between; align-items:flex-end; padding:0 40px; font-size:10px; }
+    .footer-center{ position:fixed; left:50%; bottom:20px; transform:translateX(-50%); }
+    .footer-right{ display:flex; gap:20px; }
+    .keyhole-logo{ height:18px; }
   </style>
 </head>
 <body>
-  <h1>Impressum</h1>
+  <main class="page">
+    <h1>Impressum</h1>
 
-  <h2>Angaben gemäß § 5 TMG</h2>
-  <p>
-    <strong>Keyhole Club Congress</strong><br>
-    Vor- und Nachname (verantwortliche Person)<br>
-    Straße Hausnummer<br>
-    PLZ Ort, Deutschland
-  </p>
+    <h2>Angaben gemäß § 5 TMG</h2>
+    <p><strong>Keyhole Club Congress</strong><br>Vor- und Nachname<br>Straße Hausnummer<br>PLZ Ort, Deutschland</p>
 
-  <h2>Kontakt</h2>
-  <p>
-    E-Mail: <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a><br>
-    Telefon: <a href="tel:+49XXXXXXXXX">+49&nbsp;XX&nbsp;XXX&nbsp;XXXX</a>
-  </p>
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a><br>Telefon: <a href="tel:+49XXXXXXXXX">+49&nbsp;XX&nbsp;XXX&nbsp;XXXX</a></p>
 
-  <h2>Vertretungsberechtigt</h2>
-  <p>Vor- und Nachname</p>
+    <h2>Vertretungsberechtigt</h2><p>Vor- und Nachname</p>
+    <h2>Umsatzsteuer</h2><p>Kleinunternehmer gemäß § 19 UStG – es wird keine Umsatzsteuer ausgewiesen.</p>
+    <h2>Inhaltlich Verantwortlicher</h2><p>Vor- und Nachname (Anschrift wie oben)</p>
 
-  <h2>Umsatzsteuer</h2>
-  <p class="small">
-    Kleinunternehmer gemäß § 19 UStG – es wird keine Umsatzsteuer ausgewiesen.
-    <!-- Falls vorhanden: USt-IdNr.: DE123456789 -->
-  </p>
+    <h2>Haftung für Inhalte</h2>
+    <p>Wir übernehmen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben unberührt.</p>
 
-  <h2>Inhaltlich Verantwortlicher</h2>
-  <p>Vor- und Nachname (Anschrift wie oben)</p>
+    <h2>Haftung für Links</h2>
+    <p>Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese Inhalte ist der jeweilige Anbieter verantwortlich.</p>
 
-  <h2>Haftung für Inhalte</h2>
-  <p class="small">
-    Wir übernehmen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte.
-    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
-    Gesetzen bleiben hiervon unberührt.
-  </p>
+    <h2>Urheberrecht</h2>
+    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
 
-  <h2>Haftung für Links</h2>
-  <p class="small">
-    Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
-    Für diese Inhalte übernehmen wir keine Haftung. Für die Inhalte ist der jeweilige Anbieter verantwortlich.
-  </p>
+    <p style="margin-top:28px;"><a href="/">← Zur Startseite</a></p>
+  </main>
 
-  <h2>Urheberrecht</h2>
-  <p class="small">
-    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.
-  </p>
-
-  <p class="small"><a href="/">Zurück zur Startseite</a></p>
+  <div class="footer">
+    <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
+    <div class="footer-center"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></div>
+    <div class="footer-right">
+      <a href="https://instagram.com/keyhole.cc" target="_blank">INSTAGRAM</a>
+      <a href="/privacy/">PRIVACY POLICY</a>
+      <a href="/imprint/">IMPRINT</a>
+    </div>
+  </div>
 </body>
 </html>
