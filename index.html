@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Keyhole</title>
   <style>
-    /* Copperplate (für Fließtext) */
+    /* Copperplate (Fließtext) */
     @font-face { font-family: 'Copperplate'; src: local('Copperplate'); }
 
-    /* Stencil Std Bold (TTF im Root) */
+    /* Stencil Std Bold (TTF ins Root legen) */
     @font-face {
       font-family: 'StencilStd-Bold';
       src: url('StencilStd-Bold.ttf') format('truetype');
@@ -16,16 +16,29 @@
     }
 
     :root{
-      --bar-h: 30px;        /* Höhe der Bar */
-      --bar-w: 620px;       /* Gesamtbreite (Input + Button + Spacings) */
-      --box-w: 6px;         /* Breite der linken Rechtecke */
-      --box-gap: 2px;       /* Abstand zwischen den 2 linken Rechtecken */
-      --box-after-gap: 20px; /* Abstand nach dem 2. Rechteck zum Input */
-      --gap-btn: 2px;      /* Abstand Input → Button */
+      /* Layout */
+      --bar-h: 30px;        /* Höhe der Bar (Input & Button) */
+      --bar-w: 620px;       /* Gesamtbreite (Input + Button + Gaps) */
+      --y-offset: 550px;    /* vertikaler Offset (alles runter) */
+
+      /* Deko links */
+      --box-w: 6px;         /* Breite der 2 linken Rechtecke */
+      --box-gap: 2px;       /* Abstand zwischen den Rechtecken */
+      --box-after-gap: 6px; /* Abstand nach 2. Rechteck zum Input */
+
+      /* Input & Button Abstände */
+      --gap-btn: 2px;       /* Abstand Input → Button */
+      --btn-pad-x: 28px;    /* horizontales Padding im Button */
+
+      /* Button Typografie */
       --btn-font: 18px;     /* Button-Schriftgröße */
-      --btn-minw: 80px;    /* Mindestbreite Button */
-      --smoke-w: 65px;     /* SMOKE Größe */
-      --y-offset: 550px;    /* >>> vertikaler Offset nach unten */
+      --btn-minw: 80px;     /* Mindestbreite Button */
+      --btn-nudge-y: 0.5px; /* optischer Feinnachjustierer vertikal (+ runter, - rauf) */
+
+      /* Smoke */
+      --smoke-w: 65px;      /* Breite des SMOKE-Overlays */
+      --smoke-left: -50px;  /* X-Position relativ zur Bar */
+      --smoke-bottom: 50px; /* Y-Position relativ zur Bar */
     }
 
     *{ box-sizing: border-box; }
@@ -35,8 +48,6 @@
       font-family:'Copperplate', serif; height:100vh; width:100vw;
     }
 
-    /* statt vertikal zu zentrieren, starten wir oben
-       und schieben das Formular mit margin-top nach unten */
     body{
       display:flex; flex-direction:column;
       justify-content:flex-start; align-items:center;
@@ -44,19 +55,19 @@
 
     .form-wrapper{
       display:flex; flex-direction:column; align-items:center; gap:20px;
-      margin-top: var(--y-offset);        /* <<< alles weiter runter */
+      margin-top: var(--y-offset);
     }
 
     form{ display:flex; flex-direction:column; align-items:center; gap:10px; }
 
-    /* === Schlanke Bar mit Doppel-Rahmen links === */
+    /* === Bar-Gruppe === */
     .input-group{
       position:relative; display:flex; align-items:stretch;
       width:var(--bar-w); max-width:92vw; height:var(--bar-h);
       gap:0;
     }
 
-    /* Linke Rechtecke: Kontur + weiße Innenkante rechts */
+    /* Linke Doppel-Rechtecke: Kontur + weiße Innenkante rechts */
     .decor-box{
       position:relative; width:var(--box-w); height:100%;
       background:transparent; border:1px solid #000;
@@ -68,30 +79,39 @@
       width:2px; background:#fff; pointer-events:none;
     }
 
-    /* Input (Helvetica), exakt 30px hoch */
+    /* Input (Helvetica), exakt Bar-Höhe */
     input[type="email"]{
       flex:1; height:100%;
       padding:0 12px; font-size:14px; border:1px solid #000; outline:none;
       font-family:Helvetica, Arial, sans-serif; background:#fff;
     }
-    input[type="email"]::placeholder{ font-family:Helvetica, Arial, sans-serif; color:#9a9a9a; }
+    input[type="email"]::placeholder{
+      font-family:Helvetica, Arial, sans-serif; color:#9a9a9a;
+    }
 
     /* definierter Spalt vor dem Button */
-    .gap-into-button{ width:var(--gap-btn); }
+    .gap-into-button{ width:var(--gap-btn); flex: 0 0 var(--gap-btn); }
 
-    /* Button: 30px hoch, Text mittig */
+    /* Button: exakt hoch, text optisch mittig */
     button[type="submit"]{
-      display:flex; align-items:center; justify-content:center;
-      height:100%; padding:0 28px; min-width:var(--btn-minw);
+      display:grid; place-items:center;              /* echtes Centering */
+      height:100%; min-width:var(--btn-minw);
+      padding:0 var(--btn-pad-x);
       border:1px solid #000; background:#000; color:#fff;
-      font-family:'StencilStd-Bold', sans-serif; font-size:var(--btn-font); letter-spacing:1px;
+      font-family:'StencilStd-Bold', sans-serif;
+      font-size:var(--btn-font); letter-spacing:1px;
+      line-height:1;                                   /* keine Zeilenhöhenverschiebung */
+      transform: translateY(var(--btn-nudge-y));       /* optischer Feinschliff */
       cursor:pointer; text-align:center;
     }
+    button[type="submit"]::first-line{ line-height:1; } /* für manche Fonts/Raster */
     button[type="submit"]:hover{ background:#222; }
 
-    /* SMOKE-Overlay – bewegt sich mit, da innerhalb .input-group */
+    /* SMOKE-Overlay – bewegt sich mit der Bar */
     .smoke{
-      position:absolute; left:-50px; bottom:50px;
+      position:absolute;
+      left: var(--smoke-left);
+      bottom: var(--smoke-bottom);
       max-width:var(--smoke-w); height:auto; pointer-events:none;
     }
 
@@ -108,9 +128,8 @@
     .footer a:hover{ text-decoration:underline; }
     .keyhole-logo{ height:18px; }
 
-    /* optional: auf kleineren Screens weniger Offset */
     @media (max-width: 600px){
-      :root{ --y-offset: 1405px; }
+      :root{ --y-offset: 360px; }
     }
   </style>
 </head>
