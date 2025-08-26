@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Keyhole</title>
   <style>
-    /* Copperplate (Fließtext) */
+    /* Copperplate (Fließtext / Footer) */
     @font-face { font-family: 'Copperplate'; src: local('Copperplate'); }
-    /* Stencil Std Bold (TTF ins Root) */
+    /* Stencil Std Bold (TTF im Root) */
     @font-face {
       font-family: 'StencilStd-Bold';
       src: url('StencilStd-Bold.ttf') format('truetype');
@@ -15,129 +15,189 @@
     }
 
     :root{
-      /* Layout / Größe */
-      --bar-h: 30px;        /* Höhe von Input & Button (schmaler = kleiner) */
-      --bar-w: 620px;       /* Gesamtbreite der Bar (Input + Button + Gaps) */
-      --y-offset: 550px;    /* Bar+Checkbox nach unten schieben */
+      /* ---- Desktop-Default (responsive durch clamp/min) ---- */
+      --bar-h: 30px;                       /* Höhe von Input & Button */
+      --bar-w: min(620px, 92vw);           /* Gesamtbreite, capped an 92vw */
+      --y-offset: clamp(160px, 52vh, 560px); /* Bar vertikal nach unten */
 
       /* Linke Doppel-Rechtecke */
-      --box-w: 6px;         /* Breite der beiden linken Rechtecke */
-      --box-gap: 2px;       /* Zwischenraum zwischen den Rechtecken */
-      --gap-after-box: 3px;/* Abstand nach den zwei Rechtecken zum Input */
+      --box-w: 6px;
+      --box-gap: 2px;
+      --gap-after-box: 3px;
 
       /* Input */
-      --input-pad-x: 12px;  /* Horizontaler Innenabstand im Input */
-      --input-font: 14px;
+      --input-pad-x: 12px;
+      --input-font: 14px;                  /* ≥16px auf Mobile (s.u.) */
 
       /* Button */
-      --gap-btn: 4px;         /* Abstand Input → Button */
-      --btn-pad-x: 28px;      /* Horizontaler Innenabstand im Button */
-      --btn-minw: 80px;       /* Mindestbreite Button */
-      --btn-font: 18px;       /* Schriftgröße im Button */
-      --btn-text-nudge-y: 2px;/* Nur Text vertikal feinjustieren (+ runter, - rauf) */
+      --gap-btn: 4px;
+      --btn-pad-x: 28px;
+      --btn-minw: 80px;
+      --btn-font: 18px;
+      --btn-text-nudge-y: 2px;             /* nur Label vertikal justieren */
 
       /* Smoke */
-      --smoke-w: 65px;        /* Breite des SMOKE-Overlays */
-      --smoke-left: -50px;    /* X-Position relativ zur Bar */
-      --smoke-bottom: 50px;   /* Y-Position relativ zur Bar */
+      --smoke-w: 65px;
+      --smoke-left: -50px;
+      --smoke-bottom: 50px;
+
+      /* Layout / Footer */
+      --footer-font: 10px;
+      --footer-pad-x: 40px;
     }
 
-    *{ box-sizing: border-box; }
-
-    html, body{
-      margin:0; padding:0; background:#fff;
-      font-family:'Copperplate', serif; height:100vh; width:100vw;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: #fff;
+      font-family: 'Copperplate', serif;
+      height: 100vh; width: 100vw;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    body{
-      display:flex; flex-direction:column;
-      justify-content:flex-start; align-items:center;
+    body {
+      display: flex; flex-direction: column;
+      justify-content: flex-start; align-items: center;
     }
 
-    .form-wrapper{
-      display:flex; flex-direction:column; align-items:center; gap:20px;
+    .form-wrapper {
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
       margin-top: var(--y-offset);
+      width: 100%;
     }
 
-    form{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+    form { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
     /* === Bar-Gruppe (Rechtecke + Input + Button) === */
-    .input-group{
-      position:relative; display:flex; align-items:stretch;
-      width:var(--bar-w); max-width:92vw; height:var(--bar-h);
+    .input-group {
+      position: relative; display: flex; align-items: stretch;
+      width: var(--bar-w); height: var(--bar-h);
     }
 
     /* Linke Doppel-Rechtecke: Kontur + weiße Innenkante rechts */
-    .decor-box{
-      position:relative; width:var(--box-w); height:100%;
-      background:transparent; border:1px solid #000;
-      margin-right:var(--box-gap);
+    .decor-box {
+      position: relative; width: var(--box-w); height: 100%;
+      background: transparent; border: 1px solid #000;
+      margin-right: var(--box-gap);
       flex: 0 0 var(--box-w);
     }
-    .decor-box::after{
-      content:""; position:absolute; top:0; bottom:0; right:1px;
-      width:2px; background:#fff; pointer-events:none;
+    .decor-box::after {
+      content: ""; position: absolute; top: 0; bottom: 0; right: 1px;
+      width: 2px; background: #fff; pointer-events: none;
     }
 
     /* definierter Abstand NACH den zwei Boxen (zuverlässiger Spacer) */
-    .gap-after-box{ flex: 0 0 var(--gap-after-box); width:var(--gap-after-box); }
+    .gap-after-box { flex: 0 0 var(--gap-after-box); width: var(--gap-after-box); }
 
-    /* Input (Helvetica), exakt Bar-Höhe */
-    input[type="email"]{
-      flex:1; height:100%;
-      padding:0 var(--input-pad-x);
-      font-size:var(--input-font);
-      border:1px solid #000; outline:none;
-      font-family:Helvetica, Arial, sans-serif; background:#fff;
+    /* Input (Helvetica) */
+    input[type="email"] {
+      flex: 1; height: 100%;
+      padding: 0 var(--input-pad-x);
+      font-size: var(--input-font);
+      border: 1px solid #000; outline: none;
+      font-family: Helvetica, Arial, sans-serif; background: #fff;
     }
-    input[type="email"]::placeholder{
-      font-family:Helvetica, Arial, sans-serif; color:#9a9a9a;
+    input[type="email"]::placeholder {
+      font-family: Helvetica, Arial, sans-serif; color: #9a9a9a;
     }
 
     /* definierter Spalt vor dem Button */
-    .gap-into-button{ flex:0 0 var(--gap-btn); width:var(--gap-btn); }
+    .gap-into-button { flex: 0 0 var(--gap-btn); width: var(--gap-btn); }
 
     /* Button: exakt hoch; Text zentriert + separat vertikal justierbar */
-    button[type="submit"]{
-      display:flex; align-items:center; justify-content:center;
-      height:100%; min-width:var(--btn-minw);
-      padding:0 var(--btn-pad-x);
-      border:1px solid #000; background:#000; color:#fff;
-      font-family:'StencilStd-Bold', sans-serif;
-      font-size:var(--btn-font); letter-spacing:1px;
-      line-height:1; cursor:pointer; text-align:center;
+    button[type="submit"] {
+      display: flex; align-items: center; justify-content: center;
+      height: 100%; min-width: var(--btn-minw);
+      padding: 0 var(--btn-pad-x);
+      border: 1px solid #000; background: #000; color: #fff;
+      font-family: 'StencilStd-Bold', sans-serif;
+      font-size: var(--btn-font); letter-spacing: 1px;
+      line-height: 1; cursor: pointer; text-align: center;
     }
-    button[type="submit"]:hover{ background:#222; }
-
-    /* Nur der Text im Button wird vertikal verschoben */
-    button[type="submit"] .btn-label{
-      position:relative; top: var(--btn-text-nudge-y);
-      display:inline-block;
+    button[type="submit"]:hover { background: #222; }
+    button[type="submit"] .btn-label {
+      position: relative; top: var(--btn-text-nudge-y); display: inline-block;
     }
 
     /* SMOKE-Overlay – bewegt sich mit der Bar */
-    .smoke{
-      position:absolute;
+    .smoke {
+      position: absolute;
       left: var(--smoke-left);
       bottom: var(--smoke-bottom);
-      max-width:var(--smoke-w); height:auto; pointer-events:none;
+      max-width: var(--smoke-w); height: auto; pointer-events: none;
     }
 
-    #thank-you-message{ display:none; font-size:12px; text-align:center; }
+    #thank-you-message { display: none; font-size: 12px; text-align: center; }
 
-    .footer{
-      position:absolute; bottom:20px; left:0; width:100%;
-      display:flex; justify-content:space-between; align-items:flex-end;
-      padding:0 40px; font-size:10px;
+    .footer {
+      position: absolute; bottom: 20px; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 0 var(--footer-pad-x);
+      font-size: var(--footer-font);
+      font-family: 'Copperplate', serif;
     }
-    .footer-center{ position:absolute; left:50%; transform:translateX(-50%); }
-    .footer-right{ display:flex; gap:20px; }
-    .footer a{ color:#000; text-decoration:none; font-size:10px; }
-    .footer a:hover{ text-decoration:underline; }
-    .keyhole-logo{ height:18px; }
+    .footer-center { position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; }
+    .footer-right { display: flex; gap: 20px; }
+    .footer a { color: #000; text-decoration: none; font-size: var(--footer-font); }
+    .footer a:hover { text-decoration: underline; }
+    .keyhole-logo { height: 18px; }
 
-    @media (max-width: 600px){
-      :root{ --y-offset: 360px; }
+    /* ---------- Tablet: etwas mehr Touch-Fläche, kompaktere Abstände ---------- */
+    @media (max-width: 900px) {
+      :root{
+        --bar-h: 32px;
+        --btn-font: 17px;
+        --btn-pad-x: 22px;
+        --gap-btn: 6px;
+        --gap-after-box: 6px;
+        --smoke-w: 56px;
+        --smoke-left: -42px;
+        --smoke-bottom: 42px;
+      }
+    }
+
+    /* ---------- Mobile: fingerfreundlich + keine Footer-Überlappung ---------- */
+    @media (max-width: 600px) {
+      :root{
+        --bar-h: 36px;                 /* mehr Höhe für Touch */
+        --input-font: 16px;            /* verhindert iOS-Zoom beim Fokussieren */
+        --btn-font: 16px;
+        --btn-pad-x: 18px;
+        --btn-minw: 96px;
+        --gap-btn: 8px;
+        --gap-after-box: 8px;
+        --box-w: 5px;
+        --bar-w: min(560px, 92vw);     /* etwas schmaler auf kleinen Screens */
+        --y-offset: clamp(120px, 48vh, 420px);
+
+        --smoke-w: 48px;
+        --smoke-left: -34px;
+        --smoke-bottom: 36px;
+
+        --footer-font: 9px;
+        --footer-pad-x: 18px;
+      }
+
+      /* Footer soll Content nicht überlappen → in den Flow setzen */
+      .footer,
+      .footer-center { position: static; transform: none; }
+      .footer { margin-top: 28px; justify-content: space-between; }
+      .footer-center { order: 2; text-align: center; }
+      .footer-left { order: 1; }
+      .footer-right { order: 3; gap: 14px; }
+      .keyhole-logo { height: 16px; }
+    }
+
+    /* ---------- Sehr kleine Geräte ---------- */
+    @media (max-width: 360px) {
+      :root{
+        --btn-pad-x: 14px;
+        --btn-minw: 88px;
+        --bar-w: min(95vw, 520px);
+        --y-offset: clamp(100px, 46vh, 360px);
+        --smoke-w: 42px;
+        --smoke-left: -28px;
+        --smoke-bottom: 32px;
+      }
     }
   </style>
 </head>
