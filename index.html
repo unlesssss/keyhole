@@ -25,39 +25,39 @@
   }
 
   /* ===========================
-     TWEAK THESE NUMBERS (all in one place)
+     TWEAK THESE NUMBERS (desktop defaults)
      =========================== */
   :root{
     /* Bar height (rectangles, input, button all match this) */
     --BAR_H: 28px;
 
     /* Left rectangles */
-    --RECT1_W: 5.5px;             /* first rectangle width */
-    --RECT2_W: 5.5px;             /* second rectangle width */
-    --RECTS_GAP_BETWEEN: 2px;   /* space between the two rectangles */
+    --RECT1_W: 5.5px;
+    --RECT2_W: 5.5px;
+    --RECTS_GAP_BETWEEN: 2px;
 
     /* Gaps */
-    --GAP_AFTER_RECTS: 3.5px;     /* after rectangles, before input */
-    --GAP_INTO_BUTTON: 6px;     /* before the button */
+    --GAP_AFTER_RECTS: 3.5px;
+    --GAP_INTO_BUTTON: 6px;
 
     /* Input & Button widths */
-    --INPUT_W: 312px;           /* input bar width */
-    --BUTTON_W: 160px;          /* button width */
+    --INPUT_W: 312px;
+    --BUTTON_W: 160px;
 
-    /* Subscribe text size + micro Y nudge (for perfect optical centering) */
+    /* Subscribe text size + micro Y nudge */
     --SUBSCRIBE_FS: 14px;
-    --SUBSCRIBE_Y_NUDGE: 2px;   /* e.g. 0.5px or 1px if it looks a hair high/low */
+    --SUBSCRIBE_Y_NUDGE: 2px;
 
     /* Consent spacing under the cigarette */
     --CONSENT_MARGIN_TOP: 16px;
 
     /* Smoke image */
     --SMOKE_W: 56px;
-    --SMOKE_LEFT: -38px;        /* negative = left of the cigarette */
-    --SMOKE_BOTTOM: 45px;       /* from the bottom of the bar */
+    --SMOKE_LEFT: -38px;
+    --SMOKE_BOTTOM: 45px;
 
     /* Move the whole centered block up/down */
-    --STAGE_Y_NUDGE: 18px;      /* positive = move everything down */
+    --STAGE_Y_NUDGE: 18px;
   }
 
   /* ===========================
@@ -67,7 +67,6 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    /* stay perfectly centered, then nudge vertically by variable */
     transform: translate(-50%, -50%) translateY(var(--STAGE_Y_NUDGE));
     display: flex;
     flex-direction: column;
@@ -83,18 +82,18 @@
     display: flex;
     align-items: stretch;
     height: var(--BAR_H);
-    width: max-content; /* size to contents; no flex shrinking */
+    width: max-content;
   }
 
-  /* Left decorative rectangles (keep outer border; inner white stripe) */
+  /* Left decorative rectangles */
   .decor-box {
     position: relative;
     height: 100%;
     border: 1px solid #000;
     background: transparent;
-    width: var(--W);        /* set per-rect below */
-    flex: 0 0 var(--W);     /* lock width against flexbox */
-    box-shadow: inset -2px 0 0 #fff; /* inner white edge without killing border */
+    width: var(--W);
+    flex: 0 0 var(--W);
+    box-shadow: inset -2px 0 0 #fff; /* inner white edge, border stays visible */
   }
   .rect-1 { --W: var(--RECT1_W); margin-right: var(--RECTS_GAP_BETWEEN); }
   .rect-2 { --W: var(--RECT2_W); }
@@ -108,14 +107,14 @@
     width: var(--INPUT_W);
     flex: 0 0 var(--INPUT_W);
     height: 100%;
-    min-width: 0; /* avoid Safari default growth */
+    min-width: 0;
   }
   .email-input input {
     width: 100%;
     height: 100%;
     padding: 0 12px;
     font-size: 16px;
-    font-family: "NHD-Black", Helvetica, Arial, sans-serif; /* typed text uses Neue Haas */
+    font-family: "NHD-Black", Helvetica, Arial, sans-serif;
     font-weight: 900;
     border: 1px solid #000;
     background: #fff;
@@ -124,7 +123,7 @@
     -webkit-appearance: none;
   }
   .email-input input::placeholder {
-    font-family: "NHD-Black", Helvetica, Arial, sans-serif; /* placeholder too */
+    font-family: "NHD-Black", Helvetica, Arial, sans-serif;
     font-weight: 900;
     color: #c0bfbf;
   }
@@ -143,23 +142,19 @@
     font-family: "StencilStd-Bold", sans-serif;
     font-size: var(--SUBSCRIBE_FS);
     letter-spacing: 1px;
-
-    /* PERFECT CENTERING */
     display: grid; 
     place-items: center;
-
     padding: 0;
     line-height: 1;
     cursor: pointer;
   }
-  /* Micro vertical nudge for optical centering */
   .submit-btn button > span{
     display: block;
     transform: translateY(var(--SUBSCRIBE_Y_NUDGE));
   }
   .submit-btn button:hover { background:#222; }
 
-  /* Smoke decoration */
+  /* Smoke */
   .smoke {
     position: absolute;
     left: var(--SMOKE_LEFT);
@@ -169,7 +164,7 @@
     pointer-events: none;
   }
 
-  /* Consent row centered under the cigarette width */
+  /* Consent row */
   .consent {
     display: flex;
     justify-content: center;
@@ -198,6 +193,56 @@
   .footer a { color:#000; text-decoration:none; font-size:10px; }
   .footer a:hover { text-decoration: underline; }
   .keyhole-logo { height: 18px; display:block; }
+
+  /* ===== Mobile layout (≤ 600px) ===== */
+  @media (max-width: 600px){
+    :root{
+      /* bigger touch height, same vibe */
+      --BAR_H: 40px;
+
+      /* lines a touch thinner; a little more breathing room */
+      --RECT1_W: 5px;
+      --RECT2_W: 5px;
+      --RECTS_GAP_BETWEEN: 3px;
+
+      --GAP_AFTER_RECTS: 6px;
+      --GAP_INTO_BUTTON: 8px;
+
+      /* fit nicely on ~375–430px screens */
+      --INPUT_W: clamp(160px, 54vw, 260px);
+      --BUTTON_W: 132px;
+
+      /* keep label readable */
+      --SUBSCRIBE_FS: 16px;
+      --SUBSCRIBE_Y_NUDGE: 1px;
+
+      --CONSENT_MARGIN_TOP: 12px;
+
+      /* smoke scaled + nudged */
+      --SMOKE_W: 44px;
+      --SMOKE_LEFT: -32px;
+      --SMOKE_BOTTOM: 38px;
+
+      /* place the whole unit a bit lower on phones */
+      --STAGE_Y_NUDGE: 24px;
+    }
+
+    /* slightly larger input text on mobile */
+    .email-input input { font-size: 17px; }
+  }
+
+  /* Ultra-narrow phones (≤ 380px) */
+  @media (max-width: 380px){
+    :root{
+      --INPUT_W: clamp(150px, 56vw, 220px);
+      --BUTTON_W: 124px;
+      --SUBSCRIBE_FS: 15px;
+      --SMOKE_W: 40px;
+      --SMOKE_LEFT: -28px;
+      --SMOKE_BOTTOM: 36px;
+      --STAGE_Y_NUDGE: 28px;
+    }
+  }
 </style>
 </head>
 <body>
