@@ -44,8 +44,9 @@
     --INPUT_W: 312px;           /* input bar width */
     --BUTTON_W: 160px;          /* button width */
 
-    /* Subscribe text size (button label only) */
+    /* Subscribe text size + micro Y nudge (for perfect optical centering) */
     --SUBSCRIBE_FS: 14px;
+    --SUBSCRIBE_Y_NUDGE: 1px;   /* e.g. 0.5px or 1px if it looks a hair high/low */
 
     /* Consent spacing under the cigarette */
     --CONSENT_MARGIN_TOP: 16px;
@@ -54,6 +55,9 @@
     --SMOKE_W: 56px;
     --SMOKE_LEFT: -42px;        /* negative = left of the cigarette */
     --SMOKE_BOTTOM: 40px;       /* from the bottom of the bar */
+
+    /* Move the whole centered block up/down */
+    --STAGE_Y_NUDGE: 14px;      /* positive = move everything down */
   }
 
   /* ===========================
@@ -63,7 +67,8 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* perfect center */
+    /* stay perfectly centered, then nudge vertically by variable */
+    transform: translate(-50%, -50%) translateY(var(--STAGE_Y_NUDGE));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,8 +86,7 @@
     width: max-content; /* size to contents; no flex shrinking */
   }
 
-  /* Left decorative rectangles
-     Use inner white stripe via box-shadow so outer 1px border stays visible */
+  /* Left decorative rectangles (keep outer border; inner white stripe) */
   .decor-box {
     position: relative;
     height: 100%;
@@ -90,7 +94,7 @@
     background: transparent;
     width: var(--W);        /* set per-rect below */
     flex: 0 0 var(--W);     /* lock width against flexbox */
-    box-shadow: inset -2px 0 0 #fff; /* white inner edge without killing border */
+    box-shadow: inset -2px 0 0 #fff; /* inner white edge without killing border */
   }
   .rect-1 { --W: var(--RECT1_W); margin-right: var(--RECTS_GAP_BETWEEN); }
   .rect-2 { --W: var(--RECT2_W); }
@@ -137,12 +141,21 @@
     border: 1px solid #000;
     background: #000; color:#fff;
     font-family: "StencilStd-Bold", sans-serif;
-    font-size: var(--SUBSCRIBE_FS);  /* ← adjust label size here */
+    font-size: var(--SUBSCRIBE_FS);
     letter-spacing: 1px;
-    display: grid; place-items: center; /* perfectly centers text */
+
+    /* PERFECT CENTERING */
+    display: grid; 
+    place-items: center;
+
     padding: 0;
     line-height: 1;
     cursor: pointer;
+  }
+  /* Micro vertical nudge for optical centering */
+  .submit-btn button > span{
+    display: block;
+    transform: translateY(var(--SUBSCRIBE_Y_NUDGE));
   }
   .submit-btn button:hover { background:#222; }
 
