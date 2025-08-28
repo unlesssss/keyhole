@@ -1,172 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Keyhole</title>
-  <style>
-    /* --- Fonts --- */
-    @font-face { font-family: 'Copperplate'; src: local('Copperplate'); }
-    @font-face {
-      font-family: 'StencilStd-Bold';
-      src: url('StencilStd-Bold.ttf') format('truetype');
-      font-weight: 700; font-style: normal; font-display: swap;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Keyhole</title>
+<style>
+  /* Fonts */
+  @font-face { font-family: "Copperplate"; src: local("Copperplate"); }
+  @font-face {
+    font-family: "StencilStd-Bold";
+    src: url("StencilStd-Bold.ttf") format("truetype");
+    font-weight: 700; font-style: normal; font-display: swap;
+  }
 
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0; background: #fff;
-      height: 100vh; width: 100vw;
-      font-family: 'Copperplate', serif;
-    }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100vh; width: 100vw; background:#fff;
+    font-family: "Copperplate", serif;
+  }
 
-    /* =========================
-       CENTERED STAGE + CONFIG
-       ========================= */
+  /* ===========================
+     CENTER THE WHOLE UNIT
+     =========================== */
+  .stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* perfect center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* space between cigarette and consent row */
+    z-index: 1;
+  }
 
-    /* Position the whole unit dead-center on the viewport.
-       If you ever want a slight shift, nudge translate() or add top/left offsets. */
-    .stage {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      z-index: 1;
-    }
+  /* ===========================
+     TWEAK THESE NUMBERS
+     =========================== */
+  /* Bar height (applies to rectangles, input, button) */
+  .cigarette { --BAR_H: 40px; }
 
-    /* ==== CONFIG: sizes (edit these numbers) ==== */
-    /* Total bar height (rectangles, input, button all match this) */
-    :root {
-      --BAR-H: 40px;
+  /* Rectangles */
+  .rect-1  { --W: 8px;  }   /* left-most line */
+  .rect-2  { --W: 6px;  }   /* second line */
+  .rect-gap-between { --W: 4px; }  /* gap between rect-1 and rect-2 */
 
-      /* rectangles */
-      --RECT1-W: 8px;
-      --RECT2-W: 6px;
-      --RECT-GAP: 4px;   /* spacing between the two rectangles */
+  /* Gaps */
+  .gap-after-rects  { --W: 8px; }   /* gap after rectangles, before input */
+  .gap-into-button  { --W: 10px; }  /* gap before button */
 
-      /* gaps */
-      --GAP-AFTER: 8px;  /* after rectangles, before input */
-      --GAP-BEFORE-BTN: 10px; /* before the button */
+  /* Input & Button widths */
+  .email-input    { --W: 420px; }   /* input width */
+  .submit-btn     { --W: 160px; }   /* button width */
 
-      /* input + button hard widths */
-      --INPUT-W: 420px;
-      --BUTTON-W: 160px;
+  /* Smoke image */
+  .smoke {
+    --SMOKE_W: 56px;
+    --SMOKE_LEFT: -42px;   /* negative = left of the cigarette */
+    --SMOKE_BOTTOM: 40px;  /* from the bottom of the bar */
+  }
 
-      /* smoke image */
-      --SMOKE-W: 56px;
-      --SMOKE-LEFT: -42px;  /* negative = sits left of the cigarette */
-      --SMOKE-BOTTOM: 40px; /* measured from bottom of the bar */
-    }
+  /* ===========================
+     CIGARETTE LAYOUT
+     =========================== */
+  .cigarette {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: var(--BAR_H);
+    width: max-content;     /* size to contents; no flex shrinking */
+  }
 
-    /* Compute the “cigarette” total width (purely visual; not required to edit) */
-    /* total = rect1 + gap + rect2 + gapAfter + input + gapBeforeBtn + button */
-    .cigarette {
-      position: relative;
-      display: flex;
-      align-items: stretch;
-      height: var(--BAR-H);
-      /* width is implied by children; set explicit max-content to avoid flex shrink */
-      width: max-content;
-    }
+  /* left decorative rectangles */
+  .decor-box {
+    position: relative;
+    height: 100%;
+    border: 1px solid #000;
+    background: transparent;
+    /* important: set BOTH width AND flex-basis so Safari/Chrome never override */
+    width: var(--W);
+    flex: 0 0 var(--W);
+  }
+  .decor-box::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0; right: 1px;
+    width: 2px; background: #fff; pointer-events: none;
+  }
 
-    /* Left decorative rectangles */
-    .decor-box {
-      position: relative;
-      height: 100%;
-      border: 1px solid #000;
-      background: transparent;
-      flex: 0 0 auto;       /* never let flex resize these */
-    }
-    .decor-box::after {
-      content: "";
-      position: absolute;
-      top: 0; bottom: 0; right: 1px;
-      width: 2px; background: #fff; pointer-events: none;
-    }
+  /* explicit small spacer between the two rectangles */
+  .rect-gap-between {
+    width: var(--W);
+    flex: 0 0 var(--W);
+  }
 
-    /* Individually control widths via flex-basis to win against flex rules */
-    .rect-1 { flex: 0 0 var(--RECT1-W); margin-right: var(--RECT-GAP); }
-    .rect-2 { flex: 0 0 var(--RECT2-W); }
+  /* gap after both rectangles */
+  .gap-after-rects {
+    width: var(--W);
+    flex: 0 0 var(--W);
+  }
 
-    /* Fixed gap after rectangles (before input) */
-    .gap-after     { flex: 0 0 var(--GAP-AFTER); }
+  /* input */
+  .email-input {
+    width: var(--W);
+    flex: 0 0 var(--W);
+    height: 100%;
+    min-width: 0; /* avoid Safari default growth */
+  }
+  .email-input input {
+    width: 100%;
+    height: 100%;
+    padding: 0 12px;
+    font-size: 16px;
+    font-family: Helvetica, Arial, sans-serif;
+    border: 1px solid #000;
+    background: #fff;
+    outline: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .email-input input::placeholder { color:#9a9a9a; }
 
-    /* The input itself (fixed size inside a flex row) */
-    .email-input   { flex: 0 0 var(--INPUT-W); height: 100%; }
-    .email-input input {
-      width: 100%;
-      height: 100%;
-      padding: 0 12px;
-      font-size: 16px;
-      border: 1px solid #000;
-      outline: none;
-      font-family: Helvetica, Arial, sans-serif;
-      background: #fff;
-      border-radius: 0;
-      -webkit-appearance: none;
-    }
-    .email-input input::placeholder { color: #9a9a9a; }
+  /* gap before button */
+  .gap-into-button {
+    width: var(--W);
+    flex: 0 0 var(--W);
+  }
 
-    /* Fixed gap before button */
-    .gap-into-btn  { flex: 0 0 var(--GAP-BEFORE-BTN); }
+  /* button */
+  .submit-btn {
+    width: var(--W);
+    flex: 0 0 var(--W);
+    height: 100%;
+  }
+  .submit-btn button {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    background: #000; color:#fff;
+    font-family: "StencilStd-Bold", sans-serif;
+    font-size: 18px; letter-spacing: 1px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .submit-btn button:hover { background:#222; }
 
-    /* Button (fixed width, matches bar height) */
-    .submit-btn    { flex: 0 0 var(--BUTTON-W); height: 100%; }
-    .submit-btn button {
-      width: 100%;
-      height: 100%;
-      border: 1px solid #000; background: #000; color: #fff;
-      font-family: 'StencilStd-Bold', sans-serif;
-      font-size: 18px; letter-spacing: 1px; line-height: 1;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-    }
-    .submit-btn button:hover { background: #222; }
+  /* smoke decoration */
+  .smoke {
+    position: absolute;
+    left: var(--SMOKE_LEFT);
+    bottom: var(--SMOKE_BOTTOM);
+    max-width: var(--SMOKE_W);
+    height: auto;
+    pointer-events: none;
+  }
 
-    /* Smoke decoration locked to the cigarette container */
-    .smoke {
-      position: absolute;
-      left: var(--SMOKE-LEFT);
-      bottom: var(--SMOKE-BOTTOM);
-      max-width: var(--SMOKE-W);
-      height: auto;
-      pointer-events: none;
-    }
+  /* consent row centered under the cigarette width */
+  .consent {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* center under the cigarette */
+    font-size: 10px;
+    text-align: center;
+  }
+  .consent label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-    /* Consent row centered to the cigarette width */
-    .consent {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 8px;
-      font-size: 10px;
-      text-align: center;
-    }
-    .consent label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Footer */
-    .footer {
-      position: fixed; left: 0; right: 0; bottom: 0;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      padding: 0 40px 20px;
-      font-size: 10px; font-family: 'Copperplate', serif;
-      pointer-events: none;
-    }
-    .footer > * { pointer-events: auto; }
-    .footer-center { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); }
-    .footer-right  { display: flex; gap: 20px; }
-    .footer a { color: #000; text-decoration: none; font-size: 10px; }
-    .footer a:hover { text-decoration: underline; }
-    .keyhole-logo { height: 18px; display: block; }
-  </style>
+  /* ====== Footer (unchanged) ====== */
+  .footer {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 0 40px 20px;
+    font-size: 10px; font-family: "Copperplate", serif;
+    pointer-events: none;
+  }
+  .footer > * { pointer-events: auto; }
+  .footer-center { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); }
+  .footer-right { display: flex; gap: 20px; }
+  .footer a { color:#000; text-decoration:none; font-size:10px; }
+  .footer a:hover { text-decoration: underline; }
+  .keyhole-logo { height: 18px; display:block; }
+</style>
 </head>
 <body>
 
@@ -176,27 +192,28 @@
           method="post"
           target="ml-form-frame">
 
-      <!-- The “cigarette” -->
+      <!-- CIGARETTE -->
       <div class="cigarette" id="cigarette">
         <img class="smoke" src="SMOKE.png" alt="smoke">
 
         <div class="decor-box rect-1"></div>
+        <div class="rect-gap-between" aria-hidden="true"></div>
         <div class="decor-box rect-2"></div>
 
-        <div class="gap-after" aria-hidden="true"></div>
+        <div class="gap-after-rects" aria-hidden="true"></div>
 
         <div class="email-input">
           <input type="email" name="fields[email]" placeholder="enter mail" required>
         </div>
 
-        <div class="gap-into-btn" aria-hidden="true"></div>
+        <div class="gap-into-button" aria-hidden="true"></div>
 
         <div class="submit-btn">
-          <button type="submit"><span class="btn-label">SUBSCRIBE</span></button>
+          <button type="submit"><span>SUBSCRIBE</span></button>
         </div>
       </div>
 
-      <!-- Consent row centered under cigarette -->
+      <!-- CONSENT centered under cigarette -->
       <div class="consent">
         <label>
           <input type="checkbox" name="consent" required>
@@ -211,6 +228,7 @@
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
+  <!-- Footer -->
   <div class="footer">
     <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
     <div class="footer-center"><img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></div>
@@ -222,7 +240,7 @@
   </div>
 
   <script>
-    // Swap to THANK YOU without navigating away
+    // Replace form with THANK YOU after submit (no navigation)
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
     form.addEventListener('submit', () => {
