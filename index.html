@@ -29,8 +29,8 @@
        - Absolute pixel placement: set left: 120px; remove the transform */
     .form-position{
       position: fixed;
-      top: 320px;        /* ← move up/down */
-      left: 50%;         /* ← move left/right */
+      top: 430px;        /* ← move up/down */
+      left: 60%;         /* ← move left/right */
       transform: translateX(-50%); /* keep centered; remove if using pixel left */
       display: flex;
       flex-direction: column;
@@ -44,7 +44,7 @@
       position: relative;
       display: flex; align-items: stretch;
       width: 700px;     /* ← TOTAL BAR WIDTH */
-      height: 40px;     /* ← TOTAL BAR HEIGHT */
+      height: 30px;     /* ← TOTAL BAR HEIGHT */
     }
 
     /* ===== LEFT RECTANGLES =====
@@ -66,7 +66,7 @@
     .rect-2{ width: 6px;  margin-right: 0;   } /* second rect (no right margin) */
 
     /* ===== GAP AFTER RECTANGLES (before input) ===== */
-    .gap-after{ width: 8px; flex:0 0 auto; }
+    .gap-after{ width: 4px; flex:0 0 auto; }
 
     /* ===== INPUT SIZE ===== */
     input[type="email"]{
@@ -81,11 +81,11 @@
     input[type="email"]::placeholder{ color:#9a9a9a; }
 
     /* ===== GAP BEFORE BUTTON ===== */
-    .gap-into-btn{ width: 10px; flex:0 0 auto; }
+    .gap-into-btn{ width: 5px; flex:0 0 auto; }
 
     /* ===== BUTTON SIZE ===== */
     button[type="submit"]{
-      width: 180px;      /* ← BUTTON WIDTH */
+      width: 140px;      /* ← BUTTON WIDTH */
       height: 100%;      /* ← BUTTON HEIGHT (match the bar) */
       border: 1px solid #000; background:#000; color:#fff;
       font-family: 'StencilStd-Bold', sans-serif;
