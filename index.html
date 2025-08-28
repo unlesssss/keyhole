@@ -15,138 +15,119 @@
     }
 
     * { box-sizing: border-box; }
-
     html, body {
       margin: 0; padding: 0; background: #fff;
       font-family: 'Copperplate', serif;
       height: 100vh; width: 100vw;
       -webkit-tap-highlight-color: transparent;
     }
+    body { display:flex; justify-content:flex-start; align-items:center; }
 
-    body {
-      display: flex; flex-direction: column;
-      justify-content: flex-start; align-items: center;
+    /* ========= POSITION OF THE WHOLE BLOCK =========
+       Move the entire form (bar + checkbox/thank you) by editing top/left.
+       - Center horizontally: left:50% + transform:translateX(-50%)
+       - Absolute pixel placement: set left: 120px; remove the transform */
+    .form-position{
+      position: fixed;
+      top: 320px;        /* ← move up/down */
+      left: 50%;         /* ← move left/right */
+      transform: translateX(-50%); /* keep centered; remove if using pixel left */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
     }
 
-    /* =======================
-       FIXED LAYOUT (no vars)
-       ======================= */
-
-    /* Push the form down on the page (adjust to taste) */
-    .form-wrapper{
-      display:flex; flex-direction:column; align-items:center; gap:20px;
-      margin-top: 52vh;            /* try 320px if you prefer absolute positioning */
-      width:100%;
-      padding-bottom: 100px;       /* space so the fixed footer doesn’t overlap */
-    }
-
-    form { display:flex; flex-direction:column; align-items:center; gap:10px; }
-
-    /* Bar: fixed width & height */
+    /* ===== BAR SIZE (total) ===== */
     .input-group{
       position: relative;
       display: flex; align-items: stretch;
-      width: 620px;      /* bar width */
-      height: 36px;      /* bar height */
+      width: 700px;     /* ← TOTAL BAR WIDTH */
+      height: 40px;     /* ← TOTAL BAR HEIGHT */
     }
 
-    /* Left double-rectangles (default size) */
+    /* ===== LEFT RECTANGLES =====
+       Adjust each rectangle independently below. */
     .decor-box{
       position: relative;
-      width: 6px;        /* default square width */
       height: 100%;
       background: transparent;
       border: 1px solid #000;
-      margin-right: 2px; /* default gap between squares */
-      flex: 0 0 auto;    /* do not flex */
+      flex: 0 0 auto;   /* don’t let flex resize them */
     }
     .decor-box::after{
-      content: "";
-      position: absolute; top: 0; bottom: 0; right: 1px;
-      width: 2px; background: #fff; pointer-events: none;
+      content:"";
+      position:absolute; top:0; bottom:0; right:1px;
+      width:2px; background:#fff; pointer-events:none;
     }
+    /* Individual rectangle controls */
+    .rect-1{ width: 8px;  margin-right: 4px; } /* width + spacing to the next rect */
+    .rect-2{ width: 6px;  margin-right: 0;   } /* second rect (no right margin) */
 
-    /* Fixed gaps */
-    .gap-after-box{ width: 4px; flex: 0 0 auto; }    /* space after the two squares */
-    .gap-into-button{ width: 6px; flex: 0 0 auto; }  /* space before the button */
+    /* ===== GAP AFTER RECTANGLES (before input) ===== */
+    .gap-after{ width: 8px; flex:0 0 auto; }
 
-    /* Input (match bar height) */
+    /* ===== INPUT SIZE ===== */
     input[type="email"]{
-      flex: 1;
-      height: 100%;
+      width: 340px;      /* ← INPUT WIDTH */
+      height: 100%;      /* ← INPUT HEIGHT (match the bar) */
       padding: 0 12px;
       font-size: 16px;
       border: 1px solid #000; outline: none;
-      font-family: Helvetica, Arial, sans-serif; background: #fff;
-      border-radius: 0;                 /* iOS: no rounded corners */
-      -webkit-appearance: none;         /* iOS: disable native styling */
+      font-family: Helvetica, Arial, sans-serif; background:#fff;
+      border-radius: 0; -webkit-appearance: none;
     }
-    input[type="email"]::placeholder{
-      font-family: Helvetica, Arial, sans-serif; color: #9a9a9a;
-    }
+    input[type="email"]::placeholder{ color:#9a9a9a; }
 
-    /* Button (match bar height) */
+    /* ===== GAP BEFORE BUTTON ===== */
+    .gap-into-btn{ width: 10px; flex:0 0 auto; }
+
+    /* ===== BUTTON SIZE ===== */
     button[type="submit"]{
-      display:flex; align-items:center; justify-content:center;
-      height: 100%;
-      min-width: 96px;
-      padding: 0 22px;
+      width: 180px;      /* ← BUTTON WIDTH */
+      height: 100%;      /* ← BUTTON HEIGHT (match the bar) */
       border: 1px solid #000; background:#000; color:#fff;
       font-family: 'StencilStd-Bold', sans-serif;
-      font-size: 16px; letter-spacing: 1px; line-height:1; cursor:pointer;
+      font-size: 18px; letter-spacing: 1px; line-height:1; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
       text-align:center;
     }
     button[type="submit"]:hover{ background:#222; }
-    button[type="submit"] .btn-label{ position:relative; top:2px; }
 
-    /* SMOKE image aligned relative to bar */
+    /* Optional: slight label nudge */
+    .btn-label{ position:relative; top:2px; }
+
+    /* ===== Smoke image relative to the bar ===== */
     .smoke{
       position:absolute;
-      left:-42px;        /* tweak horizontally */
-      bottom: 36px;      /* tweak vertically */
-      max-width: 56px;   /* smoke size */
+      left:-42px;       /* tweak horizontally */
+      bottom: 40px;     /* tweak vertically */
+      max-width: 56px;  /* image size */
       height:auto; pointer-events:none;
     }
 
-    #thank-you-message { display:none; font-size: 12px; text-align:center; }
+    #thank-you-message { display:none; font-size:12px; text-align:center; }
 
-    /* ===== Footer: fixed bottom, centered keyhole ===== */
+    /* ===== Footer (fixed), center keyhole ===== */
     .footer{
-      position: fixed; left: 0; right: 0; bottom: 0;
-      display: flex; justify-content: space-between; align-items: flex-end;
-      padding: 0 40px 20px;       /* left/right/bottom padding */
-      font-size: 10px;
-      font-family: 'Copperplate', serif;
-      pointer-events: none;       /* let clicks pass through except links */
+      position: fixed; left:0; right:0; bottom:0;
+      display:flex; justify-content:space-between; align-items:flex-end;
+      padding: 0 40px 20px;
+      font-size:10px; font-family:'Copperplate', serif;
+      pointer-events:none;
     }
-    .footer > * { pointer-events: auto; }
-    .footer-center{
-      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
-    }
-    .footer-right{ display: flex; gap: 20px; }
+    .footer > * { pointer-events:auto; }
+    .footer-center{ position:fixed; left:50%; bottom:20px; transform:translateX(-50%); }
+    .footer-right{ display:flex; gap:20px; }
     .footer a{ color:#000; text-decoration:none; font-size:10px; }
-    .footer a:hover{ text-decoration: underline; }
-    .keyhole-logo{ height: 18px; display:block; }
-
-    /* =========
-       Utilities
-       ========= */
-
-    /* Different square widths (apply on .decor-box) */
-    .w4{  width:4px;  }
-    .w6{  width:6px;  }   /* default */
-    .w8{  width:8px;  }
-    .w10{ width:10px; }
-
-    /* Different fixed gaps (apply on .gap-after-box or .gap-into-button) */
-    .g2{ width:2px; }
-    .g4{ width:4px; }     /* default gap-after is 4px, gap-into-button is 6px */
-    .g6{ width:6px; }
-    .g8{ width:8px; }
+    .footer a:hover{ text-decoration:underline; }
+    .keyhole-logo{ height:18px; display:block; }
   </style>
 </head>
 <body>
-  <div class="form-wrapper">
+
+  <div class="form-position">
     <form id="newsletter-form"
           action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe"
           method="post"
@@ -155,18 +136,20 @@
       <div class="input-group">
         <img class="smoke" src="SMOKE.png" alt="smoke">
 
-        <!-- Change individual square sizes by adding utility classes: w4, w6, w8, w10 -->
-        <div class="decor-box w10"></div>  <!-- first square 10px -->
-        <div class="decor-box w6"></div>   <!-- second square 6px -->
+        <!-- Rectangles (edit .rect-1 / .rect-2 in CSS to change sizes) -->
+        <div class="decor-box rect-1"></div>
+        <div class="decor-box rect-2"></div>
 
-        <!-- Change this gap by g2/g4/g6/g8 -->
-        <div class="gap-after-box g6" aria-hidden="true"></div>
+        <!-- Gap after rectangles (change width in .gap-after) -->
+        <div class="gap-after" aria-hidden="true"></div>
 
+        <!-- Input -->
         <input type="email" name="fields[email]" placeholder="enter mail" required>
 
-        <!-- Change this gap by g2/g4/g6/g8 -->
-        <div class="gap-into-button g8" aria-hidden="true"></div>
+        <!-- Gap before button (change width in .gap-into-btn) -->
+        <div class="gap-into-btn" aria-hidden="true"></div>
 
+        <!-- Button -->
         <button type="submit"><span class="btn-label">SUBSCRIBE</span></button>
       </div>
 
@@ -193,10 +176,14 @@
   </div>
 
   <script>
+    /* Replace form with THANK YOU after submit */
     const form = document.getElementById('newsletter-form');
     const thankYou = document.getElementById('thank-you-message');
     form.addEventListener('submit', () => {
-      setTimeout(() => { form.style.display = 'none'; thankYou.style.display = 'block'; }, 1000);
+      setTimeout(() => {
+        form.style.display = 'none';
+        thankYou.style.display = 'block';
+      }, 1000);
     });
   </script>
 </body>
