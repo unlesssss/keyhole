@@ -30,7 +30,8 @@
 
     :root{
       --container-w: 720px;
-      --footer-font: 9px;
+      --footer-font: 9px;                /* desktop footer font size */
+      --FOOTER_KEYHOLE_Y_NUDGE: 3px;     /* desktop: nudge keyhole down */
     }
 
     /* Page content */
@@ -73,13 +74,13 @@
     .footer-center{
       position:fixed;
       left:50%;
-      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px);
+      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px + var(--FOOTER_KEYHOLE_Y_NUDGE));
       transform:translateX(-50%);
       z-index:4;
     }
     .footer-center .keyhole-logo{ height:18px; display:block; }
 
-    /* ===== Mobile header keyhole (hidden on desktop) ===== */
+    /* ===== Mobile header keyhole ===== */
     .header{
       position:fixed; top:0; left:0; right:0;
       display:none;
@@ -88,13 +89,14 @@
       background:#fff;
       z-index:5;
     }
-    .header .keyhole-logo{ height:20px; width:auto; display:block; }
+    .header .keyhole-logo{ height:10px; width:auto; display:block; }
 
+    /* ===== Mobile overrides ===== */
     @media (max-width: 600px){
       .header{ display:flex; }
       .footer-center{ display:none; }
 
-      :root{ --footer-font: 8px; }
+      :root{ --footer-font: 6px; }
 
       .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 14px); }
       .footer-right{ gap:14px; }
@@ -142,7 +144,7 @@
     </p>
   </main>
 
-  <!-- Footer (desktop keyhole centered). On phones the header keyhole shows instead. -->
+  <!-- Footer -->
   <div class="footer-center">
     <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
   </div>
