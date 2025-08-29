@@ -25,7 +25,7 @@
   }
 
   /* ===========================
-     TWEAK THESE NUMBERS (desktop defaults)
+     TWEAK (sizes are hard-coded; do not change per-device)
      =========================== */
   :root{
     /* Bar height (rectangles, input, button all match this) */
@@ -44,29 +44,43 @@
     --INPUT_W: 312px;
     --BUTTON_W: 160px;
 
-    /* Subscribe text size + micro Y nudge */
+    /* Subscribe text size + micro Y nudge (optical centering) */
     --SUBSCRIBE_FS: 14px;
     --SUBSCRIBE_Y_NUDGE: 2px;
 
     /* Consent spacing under the cigarette */
     --CONSENT_MARGIN_TOP: 16px;
 
-    /* Smoke image */
+    /* Smoke image (purely decorative) */
     --SMOKE_W: 56px;
-    --SMOKE_LEFT: -38px;
-    --SMOKE_BOTTOM: 45px;
+    --SMOKE_LEFT: -38px;   /* negative = left of cigarette */
+    --SMOKE_BOTTOM: 45px;  /* from bottom of bar */
 
-    /* Move the whole centered block up/down */
+    /* Nudge entire block up/down without changing size */
     --STAGE_Y_NUDGE: 18px;
   }
 
   /* ===========================
-     CENTER THE WHOLE UNIT
+     HEADER (Keyhole at top center)
+     =========================== */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+    z-index: 2;
+  }
+  .header .keyhole-logo {
+    height: 22px; width: auto; display: block;
+  }
+
+  /* ===========================
+     CENTER THE WHOLE UNIT (cigarette + consent)
      =========================== */
   .stage {
     position: fixed;
     top: 50%;
     left: 50%;
+    /* keep centered, then nudge vertically by variable; size stays constant */
     transform: translate(-50%, -50%) translateY(var(--STAGE_Y_NUDGE));
     display: flex;
     flex-direction: column;
@@ -75,30 +89,30 @@
   }
 
   /* ===========================
-     CIGARETTE LAYOUT
+     CIGARETTE (fixed-size)
      =========================== */
   .cigarette {
     position: relative;
     display: flex;
     align-items: stretch;
     height: var(--BAR_H);
-    width: max-content;
+    width: max-content; /* size to contents; do not shrink */
   }
 
-  /* Left decorative rectangles */
+  /* Left decorative rectangles (keep outer border; inner white stripe) */
   .decor-box {
     position: relative;
     height: 100%;
     border: 1px solid #000;
     background: transparent;
     width: var(--W);
-    flex: 0 0 var(--W);
-    box-shadow: inset -2px 0 0 #fff; /* inner white edge, border stays visible */
+    flex: 0 0 var(--W);        /* lock exact width */
+    box-shadow: inset -2px 0 0 #fff; /* white inner edge; border stays visible */
   }
   .rect-1 { --W: var(--RECT1_W); margin-right: var(--RECTS_GAP_BETWEEN); }
   .rect-2 { --W: var(--RECT2_W); }
 
-  /* Fixed spacers */
+  /* Spacers */
   .gap-after-rects { width: var(--GAP_AFTER_RECTS); flex: 0 0 var(--GAP_AFTER_RECTS); }
   .gap-into-button { width: var(--GAP_INTO_BUTTON); flex: 0 0 var(--GAP_INTO_BUTTON); }
 
@@ -110,8 +124,7 @@
     min-width: 0;
   }
   .email-input input {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     padding: 0 12px;
     font-size: 16px;
     font-family: "NHD-Black", Helvetica, Arial, sans-serif;
@@ -129,29 +142,15 @@
   }
 
   /* Button */
-  .submit-btn {
-    width: var(--BUTTON_W);
-    flex: 0 0 var(--BUTTON_W);
-    height: 100%;
-  }
+  .submit-btn { width: var(--BUTTON_W); flex: 0 0 var(--BUTTON_W); height: 100%; }
   .submit-btn button {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #000;
-    background: #000; color:#fff;
+    width: 100%; height: 100%;
+    border: 1px solid #000; background:#000; color:#fff;
     font-family: "StencilStd-Bold", sans-serif;
-    font-size: var(--SUBSCRIBE_FS);
-    letter-spacing: 1px;
-    display: grid; 
-    place-items: center;
-    padding: 0;
-    line-height: 1;
-    cursor: pointer;
+    font-size: var(--SUBSCRIBE_FS); letter-spacing: 1px;
+    display: grid; place-items: center; padding: 0; line-height: 1; cursor: pointer;
   }
-  .submit-btn button > span{
-    display: block;
-    transform: translateY(var(--SUBSCRIBE_Y_NUDGE));
-  }
+  .submit-btn button > span{ display:block; transform: translateY(var(--SUBSCRIBE_Y_NUDGE)); }
   .submit-btn button:hover { background:#222; }
 
   /* Smoke */
@@ -160,100 +159,52 @@
     left: var(--SMOKE_LEFT);
     bottom: var(--SMOKE_BOTTOM);
     max-width: var(--SMOKE_W);
-    height: auto;
-    pointer-events: none;
+    height: auto; pointer-events: none;
   }
 
   /* Consent row */
   .consent {
-    display: flex;
-    justify-content: center;
-    font-size: 10px;
-    text-align: center;
-    margin-top: var(--CONSENT_MARGIN_TOP);
-    width: 100%;
+    display: flex; justify-content: center; width: 100%;
+    font-size: 10px; text-align: center; margin-top: var(--CONSENT_MARGIN_TOP);
   }
-  .consent label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .consent label { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ====== Footer (unchanged) ====== */
+  /* ====== Footer (smaller text) ====== */
   .footer {
     position: fixed; left: 0; right: 0; bottom: 0;
     display: flex; justify-content: space-between; align-items: flex-end;
-    padding: 0 40px 20px;
-    font-size: 10px; font-family: "Copperplate", serif;
+    padding: 0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
+    font-size: 9px;            /* smaller than before */
+    font-family: "Copperplate", serif;
     pointer-events: none;
   }
   .footer > * { pointer-events: auto; }
-  .footer-center { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); }
-  .footer-right { display: flex; gap: 20px; }
-  .footer a { color:#000; text-decoration:none; font-size:10px; }
+  .footer-right { display: flex; gap: 18px; }
+  .footer a { color:#000; text-decoration:none; font-size: inherit; }
   .footer a:hover { text-decoration: underline; }
-  .keyhole-logo { height: 18px; display:block; }
 
-  /* ===== Mobile layout (≤ 600px) ===== */
+  /* Mobile-only: keep the SAME sizes, just make footer text a touch smaller */
   @media (max-width: 600px){
-    :root{
-      /* bigger touch height, same vibe */
-      --BAR_H: 40px;
-
-      /* lines a touch thinner; a little more breathing room */
-      --RECT1_W: 5px;
-      --RECT2_W: 5px;
-      --RECTS_GAP_BETWEEN: 3px;
-
-      --GAP_AFTER_RECTS: 6px;
-      --GAP_INTO_BUTTON: 8px;
-
-      /* fit nicely on ~375–430px screens */
-      --INPUT_W: clamp(160px, 54vw, 260px);
-      --BUTTON_W: 132px;
-
-      /* keep label readable */
-      --SUBSCRIBE_FS: 16px;
-      --SUBSCRIBE_Y_NUDGE: 1px;
-
-      --CONSENT_MARGIN_TOP: 12px;
-
-      /* smoke scaled + nudged */
-      --SMOKE_W: 44px;
-      --SMOKE_LEFT: -32px;
-      --SMOKE_BOTTOM: 38px;
-
-      /* place the whole unit a bit lower on phones */
-      --STAGE_Y_NUDGE: 24px;
-    }
-
-    /* slightly larger input text on mobile */
-    .email-input input { font-size: 17px; }
-  }
-
-  /* Ultra-narrow phones (≤ 380px) */
-  @media (max-width: 380px){
-    :root{
-      --INPUT_W: clamp(150px, 56vw, 220px);
-      --BUTTON_W: 124px;
-      --SUBSCRIBE_FS: 15px;
-      --SMOKE_W: 40px;
-      --SMOKE_LEFT: -28px;
-      --SMOKE_BOTTOM: 36px;
-      --STAGE_Y_NUDGE: 28px;
-    }
+    .header .keyhole-logo { height: 20px; }
+    .footer { font-size: 8px; padding: 0 20px calc(env(safe-area-inset-bottom, 0px) + 14px); }
+    .footer-right { gap: 14px; }
   }
 </style>
 </head>
 <body>
 
+  <!-- Header with centered keyhole -->
+  <div class="header">
+    <img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo">
+  </div>
+
+  <!-- Centered “cigarette” block (fixed-size) -->
   <div class="stage">
     <form id="newsletter-form"
           action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe"
           method="post"
           target="ml-form-frame">
 
-      <!-- CIGARETTE -->
       <div class="cigarette" id="cigarette">
         <img class="smoke" src="SMOKE.png" alt="smoke">
 
@@ -273,7 +224,6 @@
         </div>
       </div>
 
-      <!-- CONSENT centered under cigarette -->
       <div class="consent">
         <label>
           <input type="checkbox" name="consent" required>
@@ -288,10 +238,9 @@
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer (smaller) -->
   <div class="footer">
     <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
-    <div class="footer-center"><img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></div>
     <div class="footer-right">
       <a href="https://instagram.com/keyhole.cc" target="_blank">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
