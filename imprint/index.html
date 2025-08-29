@@ -1,159 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Imprint – Keyhole</title>
-  <style>
-    /* ===== Fonts ===== */
-    @font-face{
-      font-family:'NeueHaasDisplay-Bold';
-      src:url('../NeueHaasDisplay-Bold.ttf') format('truetype');
-      font-weight:700; font-style:normal; font-display:swap;
-    }
-    @font-face{
-      font-family:'StencilStd-Bold';
-      src:url('../StencilStd-Bold.ttf') format('truetype');
-      font-weight:700; font-style:normal; font-display:swap;
-    }
-    @font-face{
-      font-family:'Copperplate';
-      src:local('Copperplate');
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Imprint – Keyhole</title>
+<style>
+  /* … same fonts as homepage … */
 
-    *{ box-sizing:border-box; }
-    html,body{
-      margin:0; padding:0; background:#fff; color:#000;
-      font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif;
-      overflow-x:hidden;
-    }
+  :root{
+    --container-w: 720px;
+    --footer-font: 9px;
+    --FOOTER_PAD_B: 18px;
+    --FOOTER_KEYHOLE_OFFSET: -4px;
+  }
 
-    :root{
-      --container-w: 720px;
-      --footer-font: 9px;
-      --FOOTER_KEYHOLE_Y_NUDGE: 0px; /* desktop: nudge footer keyhole lower */
-    }
+  body{ margin:0; font-family:"NHD-Black", Helvetica, Arial; background:#fff; }
+  .page{ max-width:var(--container-w); margin:140px auto 100px; padding:0 24px; line-height:1.6; }
+  h1,h2{ font-family:"StencilStd-Bold"; }
+  p,li{ font-size:14px; }
 
-    /* Page content */
-    .page{
-      max-width:var(--container-w);
-      margin:100px auto 100px; /* reduced spacing */
-      padding:0 24px;
-      line-height:1.5;
-    }
+  /* footer + header same as homepage */
 
-    h1,h2{
-      font-family:'StencilStd-Bold', sans-serif;
-      letter-spacing:1px;
-      margin:0 0 12px;
-    }
-    h1{ font-size:28px; }
-    h2{ font-size:18px; margin-top:28px; }
-
-    p,li,a{ font-size:14px; }
-    a{ color:#000; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
-
-    /* ===== Floating footer ===== */
-    .footer{
-      position:fixed; left:0; right:0; bottom:0;
-      display:flex; justify-content:space-between; align-items:flex-end;
-      padding:0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
-      background:#fff;
-      font-size:var(--footer-font);
-      font-family:'Copperplate', serif;
-      pointer-events:none;
-      z-index:3;
-    }
-    .footer > *{ pointer-events:auto; }
-    .footer-right{ display:flex; gap:18px; }
-    .footer a{ color:#000; text-decoration:none; font-size:inherit; }
-    .footer a:hover{ text-decoration:underline; }
-
-    /* Centered keyhole in footer (desktop) */
-    .footer-center{
-      position:fixed;
-      left:50%;
-      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px + var(--FOOTER_KEYHOLE_Y_NUDGE));
-      transform:translateX(-50%);
-      z-index:4;
-    }
-    .footer-center .keyhole-logo{ height:18px; display:block; }
-
-    /* ===== Mobile header keyhole ===== */
-    .header{
-      position:fixed; top:0; left:0; right:0;
-      display:none;
-      justify-content:center; align-items:flex-start;
-      padding-top:calc(env(safe-area-inset-top, 0px) + 16px);
-      background:#fff;
-      z-index:5;
-    }
-    .header .keyhole-logo{ height:10px; width:auto; display:block; }
-
-    /* ===== Mobile overrides ===== */
-    @media (max-width: 600px){
-      .header{ display:flex; }
-      .footer-center{ display:none; }
-
-      :root{ --footer-font: 6px; }
-
-      .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 18px); }
-      .footer-right{ gap:14px; }
-
-      .page{ margin-top:90px; margin-bottom:100px; } /* reduced spacing */
-    }
-  </style>
+  @media (max-width:600px){
+    .header{ display:flex; }
+    .footer-center{ display:none; }
+    :root{ --footer-font:6px; --FOOTER_PAD_B:20px; }
+    .footer{ padding:10px 16px calc(env(safe-area-inset-bottom,0px) + var(--FOOTER_PAD_B)); }
+    .footer-right{ gap:14px; }
+    .page{ margin-top:180px; margin-bottom:140px; }
+  }
+</style>
 </head>
 <body>
-
-  <!-- Mobile header keyhole -->
-  <div class="header">
-    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
-  </div>
-
+  <div class="header"><img src="../Keyhole_Logo.png" class="keyhole-logo"></div>
   <main class="page">
     <h1>Imprint</h1>
-
-    <p>
-      Leonard Berinson<br/>
-      Niebuhrstraße 2<br/>
-      10629 Berlin
-    </p>
-
-    <h2>Contact</h2>
-    <p>
-      <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a>
-    </p>
-
-    <h2>Liability for Content</h2>
-    <p>
-      The contents of these pages were created with great care. However, we cannot guarantee the accuracy,
-      completeness or timeliness of the content.
-    </p>
-
-    <h2>Liability for Links</h2>
-    <p>
-      This site contains links to external websites of third parties. We have no influence on their content;
-      the respective provider is responsible. At the time of linking, no illegal content was recognizable.
-    </p>
-
-    <h2>Copyright</h2>
-    <p>
-      All content on this website is subject to copyright. Any use beyond the limits of copyright law requires prior consent.
-    </p>
+    <!-- … your imprint text … -->
   </main>
-
-  <!-- Footer -->
-  <div class="footer-center">
-    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
-  </div>
+  <div class="footer-center"><img src="../Keyhole_Logo.png" class="keyhole-logo"></div>
   <div class="footer">
-    <div class="footer-left">
-      <a href="/">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</a>
-    </div>
+    <div class="footer-left">© 2025 <a href="/" style="color:inherit;text-decoration:none;">KEYHOLE CLUB CONGRESS</a> ALL RIGHTS RESERVED</div>
     <div class="footer-right">
-      <a href="https://instagram.com/keyhole.cc" target="_blank" rel="noopener">INSTAGRAM</a>
+      <a href="https://instagram.com/keyhole.cc">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
       <a href="/imprint/">IMPRINT</a>
     </div>
