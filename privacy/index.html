@@ -31,13 +31,13 @@
     :root{
       --container-w: 720px;
       --footer-font: 9px;
-      --FOOTER_KEYHOLE_Y_NUDGE: 8px; /* desktop: nudge footer keyhole lower */
+      --FOOTER_KEYHOLE_Y_NUDGE: 12px; /* desktop: nudge footer keyhole lower */
     }
 
     /* Page content */
     .page{
       max-width:var(--container-w);
-      margin:100px auto 100px; /* reduced top/bottom spacing */
+      margin:100px auto 100px; /* reduced spacing to header */
       padding:0 24px;
       line-height:1.6;
     }
@@ -102,7 +102,7 @@
       .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 18px); }
       .footer-right{ gap:14px; }
 
-      .page{ margin-top:90px; margin-bottom:100px; } /* reduced spacing */
+      .page{ margin-top:90px; margin-bottom:100px; } /* reduced spacing on phone */
     }
   </style>
 </head>
@@ -115,7 +115,53 @@
 
   <main class="page">
     <h1>Privacy Policy</h1>
-    <!-- content unchanged -->
+
+    <h2>1. Controller</h2>
+    <p>
+      This website is operated by a <strong>private individual</strong> (non-commercial).<br/>
+      Email: <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a>
+    </p>
+
+    <h2>2. Hosting</h2>
+    <p>
+      The site is served as a static website via GitHub Pages. When you visit the site, technical connection data
+      (e.g., IP address, date/time, requested file, user agent) is processed to deliver the website and maintain
+      security (legitimate interests, Art. 6(1)(f) GDPR).
+    </p>
+
+    <h2>3. Contact</h2>
+    <p>
+      If you contact us by email or phone, we process the data you provide for the purpose of handling your request
+      (Art. 6(1)(b) or (f) GDPR). Data is deleted once your request has been completed unless statutory retention
+      obligations apply.
+    </p>
+
+    <h2>4. Newsletter</h2>
+    <p>
+      If you subscribe to the newsletter, we process your email address based on your consent (Art. 6(1)(a) GDPR).
+      The mailing service is provided by <strong>MailerLite</strong> as a processor. You may revoke your consent at
+      any time with effect for the future, e.g., via the unsubscribe link in each email.
+    </p>
+
+    <h2>5. Cookies &amp; Tracking</h2>
+    <p>
+      This site does not use non-essential cookies. Embedded services (e.g., the newsletter form) may use technically
+      necessary cookies.
+    </p>
+
+    <h2>6. Recipients</h2>
+    <p>IT service providers (hosting, newsletter delivery) as processors.</p>
+
+    <h2>7. Your Rights</h2>
+    <ul>
+      <li>Access, rectification, deletion, restriction, data portability</li>
+      <li>Objection to processing based on Art. 6(1)(f) GDPR</li>
+      <li>Withdrawal of consent at any time (Art. 7(3) GDPR)</li>
+      <li>Right to lodge a complaint with a supervisory authority</li>
+    </ul>
+
+    <h2>8. Changes to this Policy</h2>
+    <p>We will update this policy if functionality or legal requirements change.</p>
   </main>
 
   <!-- Footer -->
