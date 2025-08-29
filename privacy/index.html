@@ -30,13 +30,14 @@
 
     :root{
       --container-w: 720px;
-      --footer-font: 9px; /* desktop footer font size (matches homepage) */
+      --footer-font: 9px;                /* desktop footer font size */
+      --FOOTER_KEYHOLE_Y_NUDGE: 3px;     /* desktop: nudge keyhole down */
     }
 
     /* Page content */
     .page{
       max-width:var(--container-w);
-      margin:140px auto 120px; /* leave room for header keyhole on mobile + floating footer */
+      margin:140px auto 120px;
       padding:0 24px;
       line-height:1.6;
     }
@@ -56,14 +57,13 @@
 
     /* ===== Floating footer (like homepage) ===== */
     .footer{
-      position:fixed; left:0; right:0;
-      bottom:0;
+      position:fixed; left:0; right:0; bottom:0;
       display:flex; justify-content:space-between; align-items:flex-end;
       padding:0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
       background:#fff;
       font-size:var(--footer-font);
       font-family:'Copperplate', serif;
-      pointer-events:none; /* match homepage feel; enable children below */
+      pointer-events:none;
       z-index:3;
     }
     .footer > *{ pointer-events:auto; }
@@ -75,35 +75,33 @@
     .footer-center{
       position:fixed;
       left:50%;
-      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px);
+      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px + var(--FOOTER_KEYHOLE_Y_NUDGE));
       transform:translateX(-50%);
       z-index:4;
     }
     .footer-center .keyhole-logo{ height:18px; display:block; }
 
-    /* ===== Mobile header keyhole (hidden on desktop) ===== */
+    /* ===== Mobile header keyhole ===== */
     .header{
       position:fixed; top:0; left:0; right:0;
-      display:none; /* shown on mobile */
+      display:none;
       justify-content:center; align-items:flex-start;
       padding-top:calc(env(safe-area-inset-top, 0px) + 16px);
       background:#fff;
       z-index:5;
     }
-    .header .keyhole-logo{ height:20px; width:auto; display:block; }
+    .header .keyhole-logo{ height:10px; width:auto; display:block; }
 
+    /* ===== Mobile overrides ===== */
     @media (max-width: 600px){
-      /* Show header keyhole, hide footer keyhole on phones */
       .header{ display:flex; }
       .footer-center{ display:none; }
 
-      /* Slightly smaller footer text on phones, same layout as homepage mobile */
-      :root{ --footer-font: 8px; }
+      :root{ --footer-font: 6px; }
 
       .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 14px); }
       .footer-right{ gap:14px; }
 
-      /* tighten top margin so content starts under header keyhole */
       .page{ margin-top:120px; margin-bottom:120px; }
     }
   </style>
@@ -166,7 +164,7 @@
     <p>We will update this policy if functionality or legal requirements change.</p>
   </main>
 
-  <!-- Footer (desktop keyhole centered). On phones the header keyhole shows instead. -->
+  <!-- Footer -->
   <div class="footer-center">
     <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
   </div>
