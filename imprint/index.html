@@ -5,43 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Imprint – Keyhole</title>
 <style>
-  /* … same fonts as homepage … */
+  /* ===== Fonts ===== */
+  @font-face{ font-family:'NeueHaasDisplay-Bold'; src:url('../NeueHaasDisplay-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face{ font-family:'StencilStd-Bold'; src:url('../StencilStd-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+  @font-face{ font-family:'Copperplate'; src:local('Copperplate'); }
 
+  /* ===== Resets ===== */
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#fff; color:#000; overflow-x:hidden; }
+  img{ display:block; max-width:100%; height:auto; }
+
+  /* ===== Footer vars shared ===== */
   :root{
     --container-w: 720px;
     --footer-font: 9px;
-    --FOOTER_PAD_B: 18px;
-    --FOOTER_KEYHOLE_OFFSET: -4px;
+    --FOOTER_PAD_B_DESK: calc(env(safe-area-inset-bottom, 0px) + 18px);
+    --FOOTER_PAD_B_MOB:  calc(env(safe-area-inset-bottom, 0px) + 20px);
+    --KEYHOLE_OFFSET: -4px;
   }
 
-  body{ margin:0; font-family:"NHD-Black", Helvetica, Arial; background:#fff; }
-  .page{ max-width:var(--container-w); margin:140px auto 100px; padding:0 24px; line-height:1.6; }
-  h1,h2{ font-family:"StencilStd-Bold"; }
+  body{ font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif; }
+
+  /* Page content */
+  .page{
+    max-width:var(--container-w);
+    margin:140px auto 120px;
+    padding:0 24px;
+    line-height:1.5;
+  }
+  h1,h2{ font-family:'StencilStd-Bold', sans-serif; letter-spacing:1px; margin:0 0 12px; }
+  h1{ font-size:28px; }
+  h2{ font-size:18px; margin-top:28px; }
   p,li{ font-size:14px; }
+  a{ color:#000; text-decoration:none; }
+  a:hover{ text-decoration:underline; }
 
-  /* footer + header same as homepage */
+  /* Footer (desktop) */
+  .footer{
+    position:fixed; left:0; right:0; bottom:0;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    padding: 0 32px var(--FOOTER_PAD_B_DESK);
+    background:#fff; font-size:var(--footer-font); font-family:'Copperplate', serif;
+    z-index:3;
+  }
+  .footer a{ color:#000; text-decoration:none; }
+  .footer a:hover{ text-decoration:underline; }
+  .footer-right{ display:flex; gap:18px; }
 
+  .footer-center{
+    position:fixed; left:50%;
+    bottom: calc(var(--FOOTER_PAD_B_DESK) + var(--KEYHOLE_OFFSET));
+    transform: translateX(-50%);
+    z-index:4;
+  }
+  .footer-center .keyhole-logo{ height:18px; width:auto; }
+
+  /* Mobile header keyhole */
+  .header{
+    position:fixed; top:0; left:0; right:0;
+    display:none; justify-content:center; align-items:flex-start;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+    background:#fff; z-index:5;
+  }
+  .header .keyhole-logo{ height:10px; width:auto; }
+
+  /* Mobile overrides */
   @media (max-width:600px){
     .header{ display:flex; }
     .footer-center{ display:none; }
-    :root{ --footer-font:6px; --FOOTER_PAD_B:20px; }
-    .footer{ padding:10px 16px calc(env(safe-area-inset-bottom,0px) + var(--FOOTER_PAD_B)); }
+
+    .footer{
+      padding: 10px 16px var(--FOOTER_PAD_B_MOB);
+      font-size:6px;
+    }
     .footer-right{ gap:14px; }
-    .page{ margin-top:180px; margin-bottom:140px; }
+
+    .page{ margin-top:180px; margin-bottom:140px; } /* lowered on phone */
   }
 </style>
 </head>
 <body>
-  <div class="header"><img src="../Keyhole_Logo.png" class="keyhole-logo"></div>
+
+  <!-- Mobile header keyhole -->
+  <div class="header"><a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole" class="keyhole-logo"></a></div>
+
   <main class="page">
     <h1>Imprint</h1>
-    <!-- … your imprint text … -->
+
+    <p>
+      Leonard Berinson<br/>
+      Niebuhrstraße 2<br/>
+      10629 Berlin
+    </p>
+
+    <h2>Contact</h2>
+    <p><a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a></p>
+
+    <h2>Liability for Content</h2>
+    <p>The contents of these pages were created with great care. However, we cannot guarantee the accuracy, completeness or timeliness of the content.</p>
+
+    <h2>Liability for Links</h2>
+    <p>This site contains links to external websites of third parties. We have no influence on their content; the respective provider is responsible. At the time of linking, no illegal content was recognizable.</p>
+
+    <h2>Copyright</h2>
+    <p>All content on this website is subject to copyright. Any use beyond the limits of copyright law requires prior consent.</p>
   </main>
-  <div class="footer-center"><img src="../Keyhole_Logo.png" class="keyhole-logo"></div>
+
+  <!-- Desktop keyhole + footer -->
+  <div class="footer-center"><a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole" class="keyhole-logo"></a></div>
   <div class="footer">
-    <div class="footer-left">© 2025 <a href="/" style="color:inherit;text-decoration:none;">KEYHOLE CLUB CONGRESS</a> ALL RIGHTS RESERVED</div>
+    <div class="footer-left">© 2025 <a href="/">KEYHOLE CLUB CONGRESS</a> ALL RIGHTS RESERVED</div>
     <div class="footer-right">
-      <a href="https://instagram.com/keyhole.cc">INSTAGRAM</a>
+      <a href="https://instagram.com/keyhole.cc" target="_blank" rel="noopener">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
       <a href="/imprint/">IMPRINT</a>
     </div>
