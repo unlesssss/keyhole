@@ -1,164 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Keyhole</title>
-<style>
-  /* ===== Fonts ===== */
-  @font-face { font-family: "Copperplate"; src: local("Copperplate"); }
-  @font-face {
-    font-family: "StencilStd-Bold";
-    src: url("StencilStd-Bold.ttf") format("truetype");
-    font-weight: 700; font-style: normal; font-display: swap;
-  }
-  @font-face {
-    font-family: "NHD-Black";
-    src: url("NeueHaasDisplayBlack_Kopie.ttf") format("truetype");
-    font-weight: 900; font-style: normal; font-display: swap;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Keyhole</title>
+  <style>
+    /* ===== Fonts ===== */
+    @font-face { font-family: "Copperplate"; src: local("Copperplate"); }
+    @font-face {
+      font-family: "StencilStd-Bold";
+      src: url("StencilStd-Bold.ttf") format("truetype");
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: "NHD-Black"; /* Neue Haas Display Black */
+      src: url("NeueHaasDisplayBlack_Kopie.ttf") format("truetype");
+      font-weight: 900; font-style: normal; font-display: swap;
+    }
 
-  /* ===== Resets ===== */
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; background:#fff; }
-  img { display:block; max-width:100%; height:auto; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      height: 100vh; width: 100vw;
+      background:#fff;
+      font-family: "Copperplate", serif;
+      overflow-x: hidden; /* avoid side-scroll on mobile */
+    }
 
-  /* ===== Shared footer variables ===== */
-  :root{
-    --footer-font: 9px;
-
-    /* single source of truth: where the footer sits from bottom */
-    --FOOTER_PAD_B_DESK: calc(env(safe-area-inset-bottom, 0px) + 18px);
-    --FOOTER_PAD_B_MOB:  calc(env(safe-area-inset-bottom, 0px) + 20px);
-
-    /* micro adjust ONLY the keyhole vs. the footer padding (desktop) */
-    --KEYHOLE_OFFSET: -4px; /* negative = a hair lower */
-  }
-
-  body { font-family: "Copperplate", serif; overflow-x:hidden; }
-
-  /* ===== Mobile header keyhole ===== */
-  .header{
-    position: fixed; top: 0; left: 0; right: 0;
-    display: none; /* shown on mobile */
-    justify-content: center; align-items: flex-start;
-    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
-    background: #fff; z-index: 5;
-  }
-  .header .keyhole-logo { height: 10px; width:auto; }
-
-  /* ===== Center block (cigarette) ===== */
-  .stage{
-    position: fixed; inset: 0;
-    display:flex; align-items:center; justify-content:center;
-    transform: translateY(var(--STAGE_Y_NUDGE, 0px));
-    z-index: 1;
-  }
-  :root{
-    --BAR_H: 28px; --RECT1_W: 5.5px; --RECT2_W: 5.5px; --RECTS_GAP_BETWEEN: 2px;
-    --GAP_AFTER_RECTS: 3.5px; --GAP_INTO_BUTTON: 6px;
-    --INPUT_W: 312px; --BUTTON_W: 160px;
-    --SUBSCRIBE_FS: 14px; --SUBSCRIBE_Y_NUDGE: 2px;
-    --CONSENT_MARGIN_TOP: 16px;
-    --SMOKE_W: 56px; --SMOKE_LEFT: -38px; --SMOKE_BOTTOM: 45px;
-    --STAGE_Y_NUDGE: 20px;
-  }
-  .cigarette{ display:flex; align-items:stretch; height:var(--BAR_H); width:max-content; position:relative; }
-  .decor-box{ border:1px solid #000; background:transparent; width:var(--W); flex:0 0 var(--W); box-shadow:inset -2px 0 0 #fff; }
-  .rect-1{ --W:var(--RECT1_W); margin-right:var(--RECTS_GAP_BETWEEN); }
-  .rect-2{ --W:var(--RECT2_W); }
-  .gap-after-rects{ width:var(--GAP_AFTER_RECTS); flex:0 0 var(--GAP_AFTER_RECTS); }
-  .gap-into-button{ width:var(--GAP_INTO_BUTTON); flex:0 0 var(--GAP_INTO_BUTTON); }
-  .email-input{ width:var(--INPUT_W); flex:0 0 var(--INPUT_W); height:100%; }
-  .email-input input{ width:100%; height:100%; padding:0 12px; font-size:16px; font-family:"NHD-Black", Helvetica, Arial; font-weight:900; border:1px solid #000; background:#fff; }
-  .email-input input::placeholder{ font-family:"NHD-Black", Helvetica, Arial; font-weight:900; color:#c0bfbf; }
-  .submit-btn{ width:var(--BUTTON_W); flex:0 0 var(--BUTTON_W); height:100%; }
-  .submit-btn button{ width:100%; height:100%; border:1px solid #000; background:#000; color:#fff; font-family:"StencilStd-Bold"; font-size:var(--SUBSCRIBE_FS); display:grid; place-items:center; }
-  .submit-btn button > span{ transform:translateY(var(--SUBSCRIBE_Y_NUDGE)); }
-  .smoke{ position:absolute; left:var(--SMOKE_LEFT); bottom:var(--SMOKE_BOTTOM); max-width:var(--SMOKE_W); }
-  .consent{ display:flex; justify-content:center; font-size:10px; margin-top:var(--CONSENT_MARGIN_TOP); }
-
-  /* ===== Footer (desktop) ===== */
-  .footer{
-    position:fixed; left:0; right:0; bottom:0;
-    display:flex; justify-content:space-between; align-items:flex-end;
-    padding: 0 32px var(--FOOTER_PAD_B_DESK);
-    background:#fff; font-size:var(--footer-font); color:#000;
-    font-family:"Copperplate", serif; z-index:3;
-  }
-  .footer a{ color:#000; text-decoration:none; }
-  .footer a:hover{ text-decoration:underline; }
-  .footer-right{ display:flex; gap:18px; }
-
-  /* keyhole matches the same padding, plus tiny offset */
-  .footer-center{
-    position:fixed; left:50%;
-    bottom: calc(var(--FOOTER_PAD_B_DESK) + var(--KEYHOLE_OFFSET));
-    transform: translateX(-50%);
-    z-index:4;
-  }
-  .footer-center .keyhole-logo{ height:18px; width:auto; }
-
-  /* ===== Mobile ===== */
-  @media (max-width:600px){
-    .header{ display:flex; }
-    .footer-center{ display:none; }
-
+    /* ===========================
+       DESKTOP DEFAULTS
+       =========================== */
     :root{
-      --BAR_H:22px; --RECT1_W:3px; --RECT2_W:3px;
-      --INPUT_W:180px; --BUTTON_W:110px;
-      --SUBSCRIBE_FS:11px; --CONSENT_MARGIN_TOP:12px;
-      --SMOKE_W:30px; --SMOKE_LEFT:-21px; --SMOKE_BOTTOM:30px;
-      --STAGE_Y_NUDGE: 50px; /* lower cigarette on mobile */
+      --BAR_H: 28px;
+      --RECT1_W: 5.5px;
+      --RECT2_W: 5.5px;
+      --RECTS_GAP_BETWEEN: 2px;
+      --GAP_AFTER_RECTS: 3.5px;
+      --GAP_INTO_BUTTON: 6px;
+      --INPUT_W: 312px;
+      --BUTTON_W: 160px;
+      --SUBSCRIBE_FS: 14px;
+      --SUBSCRIBE_Y_NUDGE: 2px;
+      --CONSENT_MARGIN_TOP: 16px;
+      --SMOKE_W: 56px;
+      --SMOKE_LEFT: -38px;
+      --SMOKE_BOTTOM: 45px;
+      --STAGE_Y_NUDGE: 20px; /* move whole block up/down */
     }
 
-    .footer{
-      padding: 10px 16px var(--FOOTER_PAD_B_MOB); /* extra top padding so text isn’t glued to top */
-      font-size: 6px;
+    /* ===== Header (mobile only) ===== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: none; /* shown on mobile only */
+      justify-content: center; align-items: flex-start;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+      z-index: 3;
     }
-    .footer-right{ gap:14px; }
-  }
-</style>
+    .header .keyhole-logo { height: 22px; width: auto; display: block; }
+
+    /* ===== Stage (cigarette + consent) ===== */
+    .stage {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) translateY(var(--STAGE_Y_NUDGE));
+      display: flex; flex-direction: column; align-items: center;
+      z-index: 1;
+    }
+
+    /* ===== Cigarette row ===== */
+    .cigarette {
+      position: relative;
+      display: flex; align-items: stretch;
+      height: var(--BAR_H);
+      width: max-content;
+    }
+    .decor-box {
+      position: relative; height: 100%;
+      border: 1px solid #000; background: transparent;
+      width: var(--W); flex: 0 0 var(--W);
+      box-shadow: inset -2px 0 0 #fff; /* inner white stripe */
+    }
+    .rect-1 { --W: var(--RECT1_W); margin-right: var(--RECTS_GAP_BETWEEN); }
+    .rect-2 { --W: var(--RECT2_W); }
+    .gap-after-rects { width: var(--GAP_AFTER_RECTS); flex: 0 0 var(--GAP_AFTER_RECTS); }
+    .gap-into-button { width: var(--GAP_INTO_BUTTON); flex: 0 0 var(--GAP_INTO_BUTTON); }
+
+    .email-input { width: var(--INPUT_W); flex: 0 0 var(--INPUT_W); height: 100%; min-width: 0; }
+    .email-input input{
+      width: 100%; height: 100%; padding: 0 12px;
+      font-size: 16px;
+      font-family: "NHD-Black", Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      border: 1px solid #000; background: #fff;
+      outline: none; border-radius: 0; -webkit-appearance: none;
+    }
+    .email-input input::placeholder{
+      font-family: "NHD-Black", Helvetica, Arial, sans-serif;
+      font-weight: 900; color: #c0bfbf;
+    }
+
+    .submit-btn { width: var(--BUTTON_W); flex: 0 0 var(--BUTTON_W); height: 100%; }
+    .submit-btn button{
+      width: 100%; height: 100%;
+      border: 1px solid #000; background:#000; color:#fff;
+      font-family: "StencilStd-Bold", sans-serif;
+      font-size: var(--SUBSCRIBE_FS);
+      letter-spacing: 1px;
+      display: grid; place-items: center;
+      padding: 0; line-height: 1; cursor: pointer;
+    }
+    .submit-btn button > span{ display:block; transform: translateY(var(--SUBSCRIBE_Y_NUDGE)); }
+    .submit-btn button:hover{ background:#222; }
+
+    .smoke{
+      position: absolute; left: var(--SMOKE_LEFT); bottom: var(--SMOKE_BOTTOM);
+      max-width: var(--SMOKE_W); height: auto; pointer-events: none;
+    }
+
+    .consent{
+      display: flex; justify-content: center;
+      width: 100%; font-size: 10px;
+      text-align: center; margin-top: var(--CONSENT_MARGIN_TOP);
+    }
+    .consent label{ display: inline-flex; align-items: center; gap: 6px; }
+
+    /* ===== Footer (desktop) ===== */
+    .footer{
+      position: fixed; left: 0; right: 0; bottom: 0;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
+      font-size: 9px; font-family: "Copperplate", serif;
+      pointer-events: none;
+    }
+    .footer > * { pointer-events: auto; }
+    .footer-right{ display: flex; gap: 18px; }
+    .footer a{ color: #000; text-decoration: none; font-size: inherit; }
+    .footer a:hover{ text-decoration: underline; }
+
+    .footer-center{
+      position: fixed; left: 50%;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .footer-center .keyhole-logo{ height: 18px; display: block; }
+
+    /* ===========================
+       MOBILE OVERRIDES
+       =========================== */
+    @media (max-width: 600px){
+      .header{ display: flex; }
+      .footer-center{ display: none; }
+
+      :root{
+        --BAR_H: 22px;
+        --RECT1_W: 3px;
+        --RECT2_W: 3px;
+        --RECTS_GAP_BETWEEN: 1px;
+        --GAP_AFTER_RECTS: 3px;
+        --GAP_INTO_BUTTON: 4px;
+        --INPUT_W: 180px;
+        --BUTTON_W: 110px;
+        --SUBSCRIBE_FS: 11px;
+        --SUBSCRIBE_Y_NUDGE: 1px;
+        --CONSENT_MARGIN_TOP: 12px;
+        --SMOKE_W: 30px;
+        --SMOKE_LEFT: -21px;
+        --SMOKE_BOTTOM: 30px;
+        --STAGE_Y_NUDGE: 8px;
+      }
+
+      .email-input input{ font-size: 14px; }
+      .consent{ font-size: 7px; }
+      .footer{ font-size: 6px; padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 14px); }
+      .header .keyhole-logo{ height: 10px; }
+      .footer-right{ gap: 14px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Mobile header keyhole -->
-  <div class="header"><img src="Keyhole_Logo.png" alt="Keyhole" class="keyhole-logo"></div>
+  <!-- Mobile header keyhole (hidden on desktop) -->
+  <div class="header">
+    <img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo">
+  </div>
 
-  <!-- Centered cigarette -->
+  <!-- Centered “cigarette” block -->
   <div class="stage">
-    <form id="newsletter-form" action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe" method="post" target="ml-form-frame">
-      <div class="cigarette">
+    <form id="newsletter-form"
+          action="https://assets.mailerlite.com/jsonp/1680960/forms/162087587854419890/subscribe"
+          method="post"
+          target="ml-form-frame">
+
+      <div class="cigarette" id="cigarette">
         <img class="smoke" src="SMOKE.png" alt="smoke">
 
         <div class="decor-box rect-1"></div>
         <div class="decor-box rect-2"></div>
-        <div class="gap-after-rects"></div>
+        <div class="gap-after-rects" aria-hidden="true"></div>
 
-        <div class="email-input"><input type="email" name="fields[email]" placeholder="enter mail" required></div>
+        <div class="email-input">
+          <input type="email" name="fields[email]" placeholder="enter mail" required>
+        </div>
 
-        <div class="gap-into-button"></div>
-        <div class="submit-btn"><button type="submit"><span>SUBSCRIBE</span></button></div>
+        <div class="gap-into-button" aria-hidden="true"></div>
+
+        <div class="submit-btn">
+          <button type="submit"><span>SUBSCRIBE</span></button>
+        </div>
       </div>
 
       <div class="consent">
-        <label><input type="checkbox" name="consent" required> UPDATES FROM KEYHOLE. UNSUBSCRIBE ANYTIME.</label>
+        <label>
+          <input type="checkbox" name="consent" required>
+          UPDATES FROM KEYHOLE. UNSUBSCRIBE ANYTIME.
+        </label>
       </div>
     </form>
 
-    <div id="thank-you-message" style="display:none; font-size:12px; text-align:center;">THANK YOU.</div>
+    <div id="thank-you-message" style="display:none; font-size:12px; text-align:center;">
+      THANK YOU.
+    </div>
     <iframe name="ml-form-frame" style="display:none;"></iframe>
   </div>
 
-  <!-- Desktop keyhole + footer -->
-  <div class="footer-center"><img src="Keyhole_Logo.png" alt="Keyhole" class="keyhole-logo"></div>
+  <!-- Footer with centered keyhole (desktop), links (both) -->
+  <div class="footer-center">
+    <img src="Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo">
+  </div>
   <div class="footer">
-    <div class="footer-left">© 2025 <a href="/">KEYHOLE CLUB CONGRESS</a> ALL RIGHTS RESERVED</div>
+    <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
     <div class="footer-right">
-      <a href="https://instagram.com/keyhole.cc" target="_blank" rel="noopener">INSTAGRAM</a>
+      <a href="https://instagram.com/keyhole.cc" target="_blank">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
       <a href="/imprint/">IMPRINT</a>
     </div>
   </div>
+
+  <script>
+    const form = document.getElementById('newsletter-form');
+    const thankYou = document.getElementById('thank-you-message');
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        form.style.display = 'none';
+        thankYou.style.display = 'block';
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
