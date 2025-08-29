@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Imprint – Keyhole</title>
   <style>
-    /* Fonts (paths point one level up to the repo root) */
+    /* ===== Fonts ===== */
     @font-face{
       font-family:'NeueHaasDisplay-Bold';
       src:url('../NeueHaasDisplay-Bold.ttf') format('truetype');
@@ -21,17 +21,22 @@
       src:local('Copperplate');
     }
 
-    :root{ --container-w: 720px; }
-
     *{ box-sizing:border-box; }
     html,body{
       margin:0; padding:0; background:#fff; color:#000;
       font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif;
+      overflow-x:hidden;
     }
 
+    :root{
+      --container-w: 720px;
+      --footer-font: 9px;
+    }
+
+    /* Page content */
     .page{
       max-width:var(--container-w);
-      margin:120px auto 80px;
+      margin:140px auto 120px;
       padding:0 24px;
       line-height:1.5;
     }
@@ -48,34 +53,76 @@
     a{ color:#000; text-decoration:none; }
     a:hover{ text-decoration:underline; }
 
-    /* Footer in Copperplate */
+    /* ===== Floating footer (like homepage) ===== */
     .footer{
-      position:fixed; bottom:20px; left:0; width:100%;
+      position:fixed; left:0; right:0; bottom:0;
       display:flex; justify-content:space-between; align-items:flex-end;
-      padding:0 40px; font-size:10px;
+      padding:0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
+      background:#fff;
+      font-size:var(--footer-font);
       font-family:'Copperplate', serif;
+      pointer-events:none;
+      z-index:3;
     }
-    .footer-center{ position:fixed; left:50%; bottom:20px; transform:translateX(-50%); }
-    .footer-right{ display:flex; gap:20px; }
-    .keyhole-logo{ height:18px; }
+    .footer > *{ pointer-events:auto; }
+    .footer-right{ display:flex; gap:18px; }
+    .footer a{ color:#000; text-decoration:none; font-size:inherit; }
+    .footer a:hover{ text-decoration:underline; }
+
+    /* Centered keyhole in footer (desktop) */
+    .footer-center{
+      position:fixed;
+      left:50%;
+      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px);
+      transform:translateX(-50%);
+      z-index:4;
+    }
+    .footer-center .keyhole-logo{ height:18px; display:block; }
+
+    /* ===== Mobile header keyhole (hidden on desktop) ===== */
+    .header{
+      position:fixed; top:0; left:0; right:0;
+      display:none;
+      justify-content:center; align-items:flex-start;
+      padding-top:calc(env(safe-area-inset-top, 0px) + 16px);
+      background:#fff;
+      z-index:5;
+    }
+    .header .keyhole-logo{ height:20px; width:auto; display:block; }
+
+    @media (max-width: 600px){
+      .header{ display:flex; }
+      .footer-center{ display:none; }
+
+      :root{ --footer-font: 8px; }
+
+      .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 14px); }
+      .footer-right{ gap:14px; }
+
+      .page{ margin-top:120px; margin-bottom:120px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Mobile header keyhole -->
+  <div class="header">
+    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
+  </div>
+
   <main class="page">
     <h1>Imprint</h1>
 
     <p>
-      Leonard Berinson
-      Niebuhrstraße.2
+      Leonard Berinson<br/>
+      Niebuhrstraße 2<br/>
       10629 Berlin
     </p>
 
     <h2>Contact</h2>
     <p>
-     <a href="mailto:info@keyhole.cc">hello@keyhole.cc</a><br/>
-      
+      <a href="mailto:hello@keyhole.cc">hello@keyhole.cc</a>
     </p>
-
 
     <h2>Liability for Content</h2>
     <p>
@@ -95,11 +142,14 @@
     </p>
   </main>
 
+  <!-- Footer (desktop keyhole centered). On phones the header keyhole shows instead. -->
+  <div class="footer-center">
+    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
+  </div>
   <div class="footer">
     <div class="footer-left">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</div>
-    <div class="footer-center"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></div>
     <div class="footer-right">
-      <a href="https://instagram.com/keyhole.cc" target="_blank">INSTAGRAM</a>
+      <a href="https://instagram.com/keyhole.cc" target="_blank" rel="noopener">INSTAGRAM</a>
       <a href="/privacy/">PRIVACY POLICY</a>
       <a href="/imprint/">IMPRINT</a>
     </div>
