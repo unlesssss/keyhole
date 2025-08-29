@@ -1,136 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Privacy Policy – Keyhole</title>
-  <style>
-    /* ===== Fonts ===== */
-    @font-face{
-      font-family:'NeueHaasDisplay-Bold';
-      src:url('../NeueHaasDisplay-Bold.ttf') format('truetype');
-      font-weight:700; font-style:normal; font-display:swap;
-    }
-    @font-face{
-      font-family:'StencilStd-Bold';
-      src:url('../StencilStd-Bold.ttf') format('truetype');
-      font-weight:700; font-style:normal; font-display:swap;
-    }
-    @font-face{
-      font-family:'Copperplate';
-      src:local('Copperplate');
-    }
+<main class="page">
+  <h1>Privacy Policy</h1>
 
-    *{ box-sizing:border-box; }
-    html,body{
-      margin:0; padding:0; background:#fff; color:#000;
-      font-family:'NeueHaasDisplay-Bold', Helvetica, Arial, sans-serif;
-      overflow-x:hidden;
-    }
+  <p>The protection of your personal data is very important to us. We treat your personal data confidentially and in accordance with the statutory data protection regulations (GDPR, BDSG) and this privacy policy.</p>
 
-    :root{
-      --container-w: 720px;
-      --footer-font: 9px;
-      --FOOTER_KEYHOLE_Y_NUDGE: 8px; /* desktop: nudge footer keyhole lower */
-    }
+  <h2>1. Data Controller</h2>
+  <p>KEYHOLE CLUB CONGRESS<br>
+  c/o Leo Berinson & Kean Farrar<br>
+  Email: info@keyhole.cc</p>
 
-    /* Page content */
-    .page{
-      max-width:var(--container-w);
-      margin:100px auto 100px; /* reduced top/bottom spacing */
-      padding:0 24px;
-      line-height:1.6;
-    }
+  <h2>2. Collection and Use of Personal Data</h2>
+  <p>We only collect and process personal data when it is necessary for providing a functional website, our content and services.</p>
 
-    h1,h2{
-      font-family:'StencilStd-Bold', sans-serif;
-      letter-spacing:1px;
-      margin:0 0 12px;
-    }
-    h1{ font-size:28px; }
-    h2{ font-size:18px; margin-top:28px; }
+  <h2>3. Newsletter</h2>
+  <p>If you subscribe to our newsletter, we will process your email address and any other information you provide (e.g. name, preferences). 
+  Subscription is carried out using the <strong>double opt-in procedure</strong>, meaning you will receive an email with a confirmation link after registering. Your subscription will only become active after you confirm via this link.</p>
+  <p>The newsletter is sent using <strong>MailerLite</strong> (MailerLite Limited, North Wall Quay, Dublin 1, Ireland), with whom we have concluded a Data Processing Agreement. MailerLite stores your data within the EU and processes it solely on our behalf.</p>
+  <p>You can unsubscribe from the newsletter at any time by clicking the unsubscribe link provided in each email. Upon unsubscribing, your data will be deleted unless legal storage obligations require retention.</p>
 
-    p,li,a{ font-size:14px; }
-    ul{ padding-left:18px; }
-    a{ color:#000; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
+  <h2>4. Server Log Files</h2>
+  <p>Our hosting provider automatically collects and stores information in server log files that your browser automatically transmits to us. This includes IP address, browser type, operating system, referrer URL, and time of access. These data cannot be assigned to specific persons and are not merged with other data sources.</p>
 
-    /* ===== Floating footer ===== */
-    .footer{
-      position:fixed; left:0; right:0; bottom:0;
-      display:flex; justify-content:space-between; align-items:flex-end;
-      padding:0 32px calc(env(safe-area-inset-bottom, 0px) + 16px);
-      background:#fff;
-      font-size:var(--footer-font);
-      font-family:'Copperplate', serif;
-      pointer-events:none;
-      z-index:3;
-    }
-    .footer > *{ pointer-events:auto; }
-    .footer-right{ display:flex; gap:18px; }
-    .footer a{ color:#000; text-decoration:none; font-size:inherit; }
-    .footer a:hover{ text-decoration:underline; }
+  <h2>5. Cookies</h2>
+  <p>This website may use cookies to improve usability and certain functions. Cookies are small text files stored on your device. You can configure your browser so that you are informed about the setting of cookies, allow cookies only in individual cases, exclude the acceptance of cookies for certain cases, or activate automatic deletion when closing the browser.</p>
 
-    /* Centered keyhole in footer (desktop) */
-    .footer-center{
-      position:fixed;
-      left:50%;
-      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px + var(--FOOTER_KEYHOLE_Y_NUDGE));
-      transform:translateX(-50%);
-      z-index:4;
-    }
-    .footer-center .keyhole-logo{ height:18px; display:block; }
+  <h2>6. Legal Basis</h2>
+  <p>Processing is carried out on the basis of Art. 6(1)(a) GDPR (consent) for the newsletter, and Art. 6(1)(f) GDPR (legitimate interest) for the technical provision and security of the website.</p>
 
-    /* ===== Mobile header keyhole ===== */
-    .header{
-      position:fixed; top:0; left:0; right:0;
-      display:none;
-      justify-content:center; align-items:flex-start;
-      padding-top:calc(env(safe-area-inset-top, 0px) + 16px);
-      background:#fff;
-      z-index:5;
-    }
-    .header .keyhole-logo{ height:10px; width:auto; display:block; }
+  <h2>7. Your Rights</h2>
+  <p>You have the right to request information about your stored personal data, its origin and recipients, and the purpose of data processing (Art. 15 GDPR). You also have the right to rectification (Art. 16 GDPR), erasure (Art. 17 GDPR), restriction of processing (Art. 18 GDPR), data portability (Art. 20 GDPR), and to object (Art. 21 GDPR).</p>
+  <p>You may withdraw your consent to data processing at any time with effect for the future. The legality of the data processing carried out until the withdrawal remains unaffected.</p>
+  <p>You also have the right to lodge a complaint with the responsible supervisory authority (in Germany: your local Data Protection Authority).</p>
 
-    /* ===== Mobile overrides ===== */
-    @media (max-width: 600px){
-      .header{ display:flex; }
-      .footer-center{ display:none; }
-
-      :root{ --footer-font: 6px; }
-
-      .footer{ padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 18px); }
-      .footer-right{ gap:14px; }
-
-      .page{ margin-top:90px; margin-bottom:100px; } /* reduced spacing */
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Mobile header keyhole -->
-  <div class="header">
-    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
-  </div>
-
-  <main class="page">
-    <h1>Privacy Policy</h1>
-    <!-- content unchanged -->
-  </main>
-
-  <!-- Footer -->
-  <div class="footer-center">
-    <a href="/"><img src="../Keyhole_Logo.png" alt="Keyhole Logo" class="keyhole-logo"></a>
-  </div>
-  <div class="footer">
-    <div class="footer-left">
-      <a href="/">© 2025 KEYHOLE CLUB CONGRESS ALL RIGHTS RESERVED</a>
-    </div>
-    <div class="footer-right">
-      <a href="https://instagram.com/keyhole.cc" target="_blank" rel="noopener">INSTAGRAM</a>
-      <a href="/privacy/">PRIVACY POLICY</a>
-      <a href="/imprint/">IMPRINT</a>
-    </div>
-  </div>
-</body>
-</html>
+  <h2>8. Contact</h2>
+  <p>If you have any questions about this Privacy Policy or the processing of your data, please contact us at the details provided above.</p>
+</main>
